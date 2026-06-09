@@ -115,7 +115,8 @@
         border-bottom: 2px solid #eef3fb;
       }
 
-      nav button {
+      nav button,
+      .download {
         background: none;
         border: none;
         font-size: 14px;
@@ -133,11 +134,9 @@
         gap: 9px;
         font-weight: bold;
       }
-      nav button .nav-icon {
-        font-size: 16px;
-        width: 20px;
-        text-align: center;
-        flex-shrink: 0;
+      .download {
+        text-decoration: none;
+        padding: 0;
       }
       nav button:hover {
         background: var(--gray-bg);
@@ -421,6 +420,11 @@
         <span class="nav-group-label">Consultas</span>
         <button onclick="show('faq', this)">Preguntas Frecuentes</button>
         <button onclick="show('soporte', this)">Soporte y Contacto</button>
+        <button>
+          <a class="download" href="Manual_SRT_SCL.pdf" target="_blank"
+            >Descargar Manual</a
+          >
+        </button>
       </nav>
 
       <!-- MAIN -->
@@ -593,7 +597,7 @@
           </div>
         </div>
 
-        <!-- Guía del Emppleado -->
+        <!-- Guía del Empleado -->
         <div id="empleado" class="section">
           <div class="page-header">
             <h1>Guía para el Empleado / Consultor</h1>
