@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual de Usuario — Sistema de Reporte de Tiempos</title>
+    <style>
+      /* ── RESET & BASE ─────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --navy: #1f3a6b;
+        --navy-mid: #28334f;
+        --blue: #2c6ed5;
+        --blue-light: #eef3fb;
+        --blue-pale: #dbe5f1;
+        --orange: #c55a11;
+        --green-bg: #e2efda;
+        --green-txt: #375623;
+        --yellow-bg: #fff2cc;
+        --yellow-txt: #7f4f00;
+        --red-txt: #c00000;
+        --gray-bg: #f5f6f8;
+        --gray-border: #ddd;
+        --text: #333;
+        --text-light: #666;
+        --white: #ffffff;
+        --sidebar-w: 260px;
+        --header-h: 64px;
+        --radius: 10px;
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--gray-bg);
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      /* ── HEADER ───────────────────────────────────────────────── */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: var(--header-h);
+        background: var(--white);
+        border-bottom: 1px solid var(--gray-border);
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        gap: 16px;
+      }
+      header img {
+        height: 40px;
+      }
+      .header-title {
+        font-size: 13px;
+        color: var(--text-light);
+        border-left: 1px solid var(--gray-border);
+        padding-left: 16px;
+        margin-left: 4px;
+      }
+      .header-title strong {
+        color: var(--navy);
+        font-size: 14px;
+        display: block;
+      }
+
+      /* ── LAYOUT ───────────────────────────────────────────────── */
+      .layout {
+        display: flex;
+        padding-top: var(--header-h);
+        min-height: 100vh;
+      }
+
+      /* ── SIDEBAR ──────────────────────────────────────────────── */
+      nav {
+        width: var(--sidebar-w);
+        min-width: var(--sidebar-w);
+        background: var(--white);
+        border-right: 1px solid var(--gray-border);
+        border-radius: 20px;
+        padding: 20px 12px;
+        position: fixed;
+        top: 70px;
+        bottom: 0;
+        left: 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .nav-group-label {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-light);
+        padding: 14px 12px 4px;
+        border-bottom: 2px solid #eef3fb;
+      }
+
+      nav button {
+        background: none;
+        border: none;
+        font-size: 14px;
+        color: #555;
+        cursor: pointer;
+        text-align: left;
+        padding: 9px 14px;
+        border-radius: 7px;
+        transition:
+          background 0.15s,
+          color 0.15s;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-weight: bold;
+      }
+      nav button .nav-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      nav button:hover {
+        background: var(--gray-bg);
+        color: var(--navy);
+      }
+      nav button.active {
+        background: var(--blue-light);
+        border-left: 3px solid var(--blue);
+        color: var(--blue);
+        font-weight: 600;
+        padding-left: 11px;
+      }
+
+      /* ── CONTENT AREA ─────────────────────────────────────────── */
+      main {
+        margin-left: var(--sidebar-w);
+        flex: 1;
+        padding: 32px 36px 48px;
+        max-width: 960px;
+      }
+
+      /* ── SECTIONS ─────────────────────────────────────────────── */
+      .section {
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
+
+      /* ── PAGE HEADER ──────────────────────────────────────────── */
+      .page-header {
+        background: var(--navy);
+        border-radius: var(--radius);
+        padding: 24px 28px;
+        margin-bottom: 24px;
+        /* border-bottom: 4px solid var(--orange); */
+      }
+      .page-header h1 {
+        font-size: 22px;
+        color: var(--white);
+        font-weight: 700;
+      }
+      .page-header p {
+        color: var(--blue-pale);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      /* ── CARD ─────────────────────────────────────────────────── */
+      .card {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        margin-bottom: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      /* ── HEADINGS ─────────────────────────────────────────────── */
+      h2 {
+        font-size: 17px;
+        color: var(--navy);
+        font-weight: 700;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--blue-pale);
+      }
+      h3 {
+        font-size: 15px;
+        color: var(--navy-mid);
+        font-weight: 700;
+        margin: 16px 0 8px;
+      }
+      h4 {
+        font-size: 14px;
+        color: var(--navy-mid);
+        font-weight: 600;
+        margin: 14px 0 6px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── LISTS ────────────────────────────────────────────────── */
+      ul,
+      ol {
+        padding-left: 22px;
+        margin-bottom: 10px;
+      }
+      li {
+        margin-bottom: 5px;
+      }
+      ul li::marker {
+        color: var(--blue);
+      }
+
+      /* ── STEPS ────────────────────────────────────────────────── */
+      .steps {
+        list-style: none;
+        padding: 0;
+        counter-reset: step;
+      }
+      .steps li {
+        counter-increment: step;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        margin-bottom: 10px;
+      }
+      .steps li::before {
+        content: counter(step);
+        background: var(--navy);
+        color: var(--white);
+        min-width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* ── NOTES ────────────────────────────────────────────────── */
+      .note {
+        border-radius: 7px;
+        padding: 12px 16px;
+        margin: 14px 0;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+      .note-label {
+        font-weight: 700;
+      }
+      .note.info {
+        background: var(--blue-pale);
+      }
+      .note.info .note-label {
+        color: var(--navy);
+      }
+      .note.warn {
+        background: var(--yellow-bg);
+      }
+      .note.warn .note-label {
+        color: var(--yellow-txt);
+      }
+      .note.danger {
+        background: #fde8e8;
+      }
+      .note.danger .note-label {
+        color: var(--red-txt);
+      }
+      .note.success {
+        background: var(--green-bg);
+      }
+      .note.success .note-label {
+        color: var(--green-txt);
+      }
+
+      /* ── TABLE ────────────────────────────────────────────────── */
+      .tbl-wrap {
+        overflow-x: auto;
+        margin: 12px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      thead tr {
+        background: var(--navy);
+      }
+      thead th {
+        color: var(--white);
+        font-weight: 600;
+        padding: 10px 14px;
+        text-align: left;
+      }
+      tbody tr:nth-child(even) {
+        background: var(--blue-pale);
+      }
+      tbody tr:nth-child(odd) {
+        background: var(--white);
+      }
+      tbody td {
+        padding: 9px 14px;
+        border-bottom: 1px solid #e8edf5;
+        vertical-align: top;
+      }
+
+      /* ── GRID ─────────────────────────────────────────────────── */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+      .mini-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: var(--shadow);
+        border-top: 3px solid var(--blue);
+      }
+      .mini-card h3 {
+        margin-top: 0;
+        font-size: 14px;
+        color: var(--navy);
+      }
+      .mini-card p {
+        font-size: 13px;
+        color: var(--text-light);
+        margin: 0;
+      }
+
+      /* ── STATUS BADGE ─────────────────────────────────────────── */
+      .badge {
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .badge-gray {
+        background: #e2e8f0;
+        color: #475569;
+      }
+      .badge-blue {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .badge-yellow {
+        background: #fef9c3;
+        color: #854d0e;
+      }
+      .badge-green {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .badge-red {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* ── ACCORDION ────────────────────────────────────────────── */
+      .accordion-btn {
+        background: var(--blue-light);
+        border: none;
+        width: 100%;
+        text-align: left;
+        padding: 13px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--navy);
+        border-radius: 7px;
+        cursor: pointer;
+        margin-bottom: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.15s;
+      }
+      .accordion-btn:hover {
+        background: var(--blue-pale);
+      }
+      .accordion-btn .chevron {
+        transition: transform 0.2s;
+        font-style: normal;
+      }
+      .accordion-btn.open .chevron {
+        transform: rotate(180deg);
+      }
+      .accordion-panel {
+        display: none;
+        padding: 12px 16px;
+        background: var(--white);
+        border-left: 3px solid var(--blue);
+        border-radius: 0 0 7px 7px;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      /* ── MODAL ────────────────────────────────────────────────── */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 999;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal-box {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 28px;
+        width: 90%;
+        max-width: 540px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      }
+      .modal-box h2 {
+        border-bottom-color: var(--orange);
+        margin-bottom: 14px;
+      }
+      .modal-footer {
+        margin-top: 20px;
+        text-align: right;
+      }
+
+      /* ── BUTTONS ──────────────────────────────────────────────── */
+      .btn {
+        background: var(--blue);
+        color: var(--white);
+        border: none;
+        border-radius: 6px;
+        padding: 9px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn:hover {
+        background: #1f5ab8;
+      }
+      .btn.secondary {
+        background: #e2e8f0;
+        color: var(--text);
+      }
+      .btn.secondary:hover {
+        background: #cbd5e1;
+      }
+
+      /* ── FAQ ──────────────────────────────────────────────────── */
+      .faq-q {
+        font-weight: 600;
+        color: var(--navy-mid);
+        margin: 14px 0 4px;
+      }
+      .faq-a {
+        padding-left: 16px;
+        border-left: 3px solid var(--blue-pale);
+        color: var(--text);
+      }
+
+      /* ── COVER PAGE (intro) ───────────────────────────────────── */
+      .cover-hero {
+        background: linear-gradient(135deg, var(--navy) 60%, #2c5282 100%);
+        border-radius: var(--radius);
+        padding: 36px 32px;
+        margin-bottom: 24px;
+        /* border-bottom: 4px solid var(--orange); */
+        color: var(--white);
+      }
+      .cover-hero h1 {
+        font-size: 28px;
+        margin-bottom: 6px;
+      }
+      .cover-hero .subtitle {
+        color: var(--blue-pale);
+        font-size: 16px;
+        margin-bottom: 18px;
+      }
+
+      /* ── SCROLLBAR ────────────────────────────────────────────── */
+      nav::-webkit-scrollbar {
+        width: 4px;
+      }
+      nav::-webkit-scrollbar-thumb {
+        background: var(--blue-pale);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <img
+        src="https://sclconsultores.com.mx/imagenesRegistros/logo.svg"
+        alt="SCL Consultores"
+        onerror="
+          this.style.display = 'none';
+          document.querySelector('.header-title').style.paddingLeft = '0';
+          document.querySelector('.header-title').style.borderLeft = 'none';
+        "
+      />
+      <div class="header-title">
+        <strong>Sistema de Reporte de Tiempos</strong>
+        Manual de Usuario
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- SIDEBAR -->
+      <nav id="sidebar">
+        <span class="nav-group-label">General</span>
+        <button class="active" onclick="show('intro', this)">Inicio</button>
+        <button onclick="show('acceso', this)">Acceso al Sistema</button>
+
+        <span class="nav-group-label">Por Rol</span>
+        <button onclick="show('empleado', this)">Empleado / Consultor</button>
+        <button onclick="show('supervisor', this)">Supervisor / Gerente</button>
+        <button onclick="show('admin', this)">Administrador</button>
+
+        <span class="nav-group-label">Consultas</span>
+        <button onclick="show('faq', this)">Preguntas Frecuentes</button>
+        <button onclick="show('soporte', this)">Soporte y Contacto</button>
+      </nav>
+
+      <!-- MAIN -->
+      <main>
+        <!-- Introducción -->
+        <div id="intro" class="section active">
+          <div class="cover-hero">
+            <h1>Manual de Usuario</h1>
+            <p class="subtitle">
+              Sistema de Reporte de Tiempos — SCL Consultores
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>Introducción</h2>
+            <p>
+              Esta plataforma permite a los colaboradores registrar las horas de
+              trabajo dedicadas a proyectos y actividades, mientras que
+              supervisores y administradores pueden revisar, aprobar y analizar
+              la información en tiempo real.
+            </p>
+            <p>
+              Este manual describe todas las funcionalidades del sistema
+              organizadas por perfil de usuario, para que puedas comenzar a
+              utilizarlo de manera rápida y eficiente.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>¿Qué es el Sistema de Reporte de Tiempos?</h2>
+            <p>
+              Es una aplicación web accesible desde cualquier navegador moderno.
+              Entre sus principales funcionalidades se encuentran:
+            </p>
+            <ul>
+              <li>Registro de horas trabajadas por proyecto y actividad</li>
+              <li>
+                Seguimiento del tiempo en múltiples proyectos simultáneamente
+              </li>
+              <li>Aprobación o rechazo de reportes por parte del supervisor</li>
+              <li>
+                Consulta de reportes históricos y estadísticas por período
+              </li>
+              <li>Administración de usuarios, proyectos y clientes</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>Roles de Usuario</h2>
+            <p>
+              El sistema cuenta con tres roles, cada uno con accesos y permisos
+              específicos:
+            </p>
+            <div class="tbl-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rol</th>
+                    <th>Descripción</th>
+                    <th>Principales Actividades</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Empleado / Consultor</strong></td>
+                    <td>
+                      Registra sus horas de trabajo en proyectos y actividades
+                      asignadas.
+                    </td>
+                    <td>
+                      Registrar tiempos diarios, seleccionar proyectos, agregar
+                      descripción, enviar reporte semanal.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Supervisor / Gerente</strong></td>
+                    <td>
+                      Revisa y aprueba los reportes de tiempos del equipo a su
+                      cargo.
+                    </td>
+                    <td>
+                      Ver reportes del equipo, aprobar o rechazar registros,
+                      agregar comentarios.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Administrador</strong></td>
+                    <td>
+                      Gestiona usuarios, proyectos y configuración general del
+                      sistema.
+                    </td>
+                    <td>
+                      Crear y editar usuarios, asignar roles, administrar
+                      proyectos, exportar reportes.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acceso -->
+        <div id="acceso" class="section">
+          <div class="page-header">
+            <h1>Acceso al Sistema</h1>
+            <p>
+              Cómo iniciar y cerrar sesión en el Sistema de Reporte de Tiempos
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>Ingresar al Sistema</h2>
+            <p>
+              Para acceder al Sistema de Reporte de Tiempos, sigue los pasos que
+              se indican a continuación:
+            </p>
+            <ol class="steps">
+              <li>Abre tu navegador web.</li>
+              <li>
+                En la barra de direcciones, escribe:
+                <code
+                  >https://sclconsultores.com.mx/reportetiempos/login.php</code
+                >
+              </li>
+              <li>
+                Aparecerá la pantalla de inicio de sesión con el logotipo de SCL
+                Consultores y el mensaje <strong>"¡Bienvenido!"</strong>.
+              </li>
+              <li>Escribe tus claves de acceso.</li>
+              <li>
+                Haz clic en <strong>"Acceder"</strong>. Si tus credenciales son
+                correctas, serás redirigido al panel principal.
+              </li>
+            </ol>
+            <div class="note danger">
+              <span class="note-label">⚠️ Importante: </span>
+              Si ves un mensaje de error al ingresar, verifica que tu usuario y
+              contraseña sean correctos. Las contraseñas distinguen mayúsculas
+              de minúsculas. Si el problema persiste, contacta al administrador
+              del sistema.
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Cerrar Sesión</h2>
+            <p>
+              Es importante cerrar sesión al terminar, especialmente en
+              computadoras compartidas:
+            </p>
+            <ol class="steps">
+              <li>
+                Localiza tu nombre de usuario en la esquina superior derecha
+                dentro de la barra de navegación.
+              </li>
+              <li>
+                Haz clic en tu nombre; se desplegará un menú con opciones.
+              </li>
+              <li>
+                Selecciona <strong>"Cerrar sesión"</strong>. Tu sesión se
+                cerrará y serás redirigido a la pantalla de login.
+              </li>
+            </ol>
+            <div class="note info">
+              <span class="note-label">💡 Recomendación: </span>
+              Siempre cierra tu sesión cuando termines de trabajar en el
+              sistema. Si no hay actividad durante un período prolongado, la
+              sesión se cerrará automáticamente por seguridad.
+            </div>
+          </div>
+        </div>
+
+        <!-- Guía del Emppleado -->
+        <div id="empleado" class="section">
+          <div class="page-header">
+            <h1>Guía para el Empleado / Consultor</h1>
+            <p>
+              Todo lo que necesitas saber para registrar y gestionar tus tiempos
+              diarios
+            </p>
+          </div>
+          <!-- Panel principal -->
+          <div class="card">
+            <h2>Pantalla Principal del Empleado</h2>
+            <p>
+              El panel principal es la pantalla donde podrás llevar a cabo tus
+              registros de actividades diarias, consta de las siguientes
+              funciones:
+            </p>
+            <ul>
+              <li>
+                Vista del total de horas registradas en la jornada actual.
+              </li>
+              <li>
+                Listado de entradas de tiempo con fecha, proyecto, actividad y
+                horas.
+              </li>
+              <li>Muestra si los reportes están pendientes o aprobados.</li>
+              <li>Acceso rápido para crear un nuevo registro.</li>
+            </ul>
+          </div>
+          <!-- Registro de entrada y salida -->
+          <div class="card">
+            <h2>Registro de entrada y salida</h2>
+            <ul>
+              <li>
+                El usuario registra su entrada mediante el botón “Registrar
+                entrada”.
+              </li>
+              <li>
+                El sistema solicita confirmación y registra automáticamente la
+                hora.
+              </li>
+              <li>
+                La salida se calcula automáticamente con base en una jornada de
+                8 horas.
+              </li>
+            </ul>
+          </div>
+          <!-- Registro de actividades -->
+          <div class="card">
+            <h2>Registrar Actividades</h2>
+            <p>Para agregar un nuevo registro de tiempo:</p>
+            <ul>
+              <li>
+                Desde el panel principal, haz clic en el botón "Agregar
+                actividad por proyecto”.
+              </li>
+              <li>
+                Se abrirá el formulario de registro. Se establecerá la hora
+                actual como la hora de inicio, automáticamente.
+              </li>
+              <li>
+                En el campo "Hora fin", ingresa el número de horas dedicadas (en
+                formato decimal, ej. 1.5 para una hora 30 minutos).
+              </li>
+              <li>
+                En el campo "Proyectos disponibles", selecciona de la lista
+                desplegable el proyecto al que corresponde el trabajo.
+              </li>
+              <li>
+                En el campo “Jefe responsable”, selección a tu gerente
+                encargado.
+              </li>
+              <li>
+                En el campo “Cliente”, selecciona a quien será el cliente de la
+                actividad.
+              </li>
+              <li>
+                En el campo "Descripción libre", escribe la descripción de la
+                actividad realizada.
+              </li>
+              <li>
+                Haz clic en "Guardar actividad por proyecto" para registrar la
+                entrada. Aparecerá en tu tabla de tiempos.
+              </li>
+            </ul>
+            <div class="note warn">
+              <span class="note-label">⚠️ Importante: </span>
+              Las horas deben registrarse en formato decimal. Por ejemplo: 0.5 =
+              30 minutos; 1.5 = 1 hora con 30 minutos. El sistema no acepta
+              horas negativas ni valores mayores a 24 por día.
+            </div>
+          </div>
+          <!-- Eliminar un registro de tiempo -->
+          <div class="card">
+            <h2>Eliminar un Registro de Tiempo</h2>
+            <ul>
+              <li>Localiza el registro en la tabla de tiempos.</li>
+              <li>
+                Haz clic en el ícono de <strong>"Eliminar"</strong> al final de
+                la fila.
+              </li>
+              <li>
+                Confirma la acción en la ventana de confirmación que aparecerá.
+              </li>
+              <li>
+                El registro se eliminará permanentemente de la base de datos.
+              </li>
+            </ul>
+            <div class="note danger">
+              <span class="note-label">🚫 Importante: </span>
+              Esta acción no se puede deshacer.
+            </div>
+          </div>
+          <!-- Otros registros (Incidencias) -->
+          <div class="card">
+            <h2>Otros registros (Incidencias)</h2>
+            <ul>
+              <li>Permite registrar días sin actividad laboral.</li>
+              <li>
+                Tipos disponibles: Vacaciones, Permisos, Incapacidad,
+                Cumpleaños.
+              </li>
+              <li>
+                Vacaciones, permisos e incapacidades permiten múltiples días.
+              </li>
+              <li>Cumpleaños permite únicamente un día.</li>
+            </ul>
+          </div>
+          <!-- Registros extemporneos -->
+          <div class="card">
+            <h2>Registros extemporaneos</h2>
+            <ul>
+              <li>
+                Permite registrar jornadas pasadas no capturadas previamente.
+              </li>
+              <li>Solo se pueden seleccionar días sin registro existente.</li>
+              <li>El usuario define manualmente la hora de entrada.</li>
+              <li>
+                Posteriormente puede registrar actividades como en un registro
+                normal.
+              </li>
+            </ul>
+          </div>
+          <!-- Registro mediante calendario -->
+          <div class="card">
+            <h2>Rgistros mediante calendario</h2>
+            <ul>
+              <li>El sistema proporciona un calendario interactivo.</li>
+              <li>Permite seleccionar fechas en cualquier mes del año.</li>
+              <li>
+                Se puede agregar un comentario opcional para cada registro.
+              </li>
+            </ul>
+          </div>
+          <!-- Historial de registros -->
+          <div class="card">
+            <h2>Historial de Registros</h2>
+            <ul>
+              <li>Se muestra un listado de registros realizados.</li>
+              <li>Incluye tipo, fecha y comentarios.</li>
+              <li>
+                Permite consulta de registros previos del día seleccionado en el
+                calendario.
+              </li>
+            </ul>
+          </div>
+          <!-- Reglas del sistema -->
+          <div class="card">
+            <h2>Reglas del Sistema</h2>
+            <ul>
+              <li>La jornada laboral estándar es de 8 horas.</li>
+              <li>No se pueden exceder las horas diarias permitidas.</li>
+              <li>No se permite duplicidad de registros en la misma fecha.</li>
+              <li>
+                Los registros extemporáneos solo aplican para días sin registro.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Guía del Suprviso -->
+        <div id="supervisor" class="section">
+          <div class="page-header">
+            <h1>Guía para el Supervisor / Gerente</h1>
+            <p>
+              Revisión, aprobación y gestión de los reportes de tiempo del
+              equipo
+            </p>
+          </div>
+          <!-- Aporbar un reporte -->
+          <div class="card">
+            <h2>Aprobar un Reporte</h2>
+            <ul>
+              <li>
+                Abre el reporte que deseas aprobar desde la tabla de pendientes.
+              </li>
+              <li>Revisa que todos los registros de tiempo estén correctos.</li>
+              <li>
+                Haz clic en el botón <strong>"Aprobar"</strong> (en verde).
+              </li>
+              <li>Confirma la acción en la ventana de confirmación.</li>
+              <li>
+                El estado del reporte cambiará a
+                <span class="badge badge-green">Aprobado</span> y el empleado
+                recibirá una notificación.
+              </li>
+            </ul>
+            <div class="note success">
+              <span class="note-label">✅ Recomendación: </span>
+              Revisa con detenimiento cada registro antes de aprobar,
+              especialmente las horas asignadas a proyectos de clientes.
+            </div>
+          </div>
+          <!-- Rechazar un reporte -->
+          <div class="card">
+            <h2>Rechazar un Reporte</h2>
+            <ul>
+              <li>Abre el reporte que deseas rechazar.</li>
+              <li>Identifica los registros con problemas.</li>
+              <li>
+                Haz clic en el botón <strong>"Rechazar"</strong> (en rojo).
+              </li>
+              <li>
+                Se abrirá un campo de texto donde debes escribir el
+                <strong>motivo del rechazo</strong> o las correcciones
+                requeridas.
+              </li>
+              <li>
+                Haz clic en <strong>"Confirmar rechazo"</strong>. El empleado
+                recibirá una notificación con tus comentarios.
+              </li>
+            </ul>
+          </div>
+          <!-- Agregar comentarios a un registro -->
+          <div class="card">
+            <h2>Agregar Comentarios a un Registro</h2>
+            <ul>
+              <li>
+                Dentro del detalle del reporte, localiza el registro al que
+                deseas agregar un comentario.
+              </li>
+              <li>Haz clic en el botón de comentarios de ese registro.</li>
+              <li>Escribe tu comentario en el campo de texto que se abre.</li>
+              <li>
+                Haz clic en <strong>"Guardar comentario"</strong>. El comentario
+                quedará visible para el empleado.
+              </li>
+            </ul>
+          </div>
+          <!-- Consultar reportes por empleado y proyecto -->
+          <div class="card">
+            <h2>Consultar Reportes por Empleado y Proyecto</h2>
+            <ul>
+              <li>
+                En el menú principal, selecciona <strong>"Reportes"</strong> o
+                <strong>"Historial del equipo"</strong>.
+              </li>
+              <li>
+                Utiliza los filtros para seleccionar empleado, rango de fechas y
+                proyecto de interés.
+              </li>
+              <li>
+                El sistema mostrará un resumen con el total de horas por período
+                y proyecto.
+              </li>
+              <li>
+                Puedes hacer clic en cualquier registro para ver su detalle.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Guía deñ Administrador -->
+        <div id="admin" class="section">
+          <div class="page-header">
+            <h1>Guía para el Administrador</h1>
+            <p>
+              Gestión completa de usuarios, proyectos, clientes y configuración
+              del sistema
+            </p>
+          </div>
+
+          <div class="card"></div>
+        </div>
+
+        <!-- Preguntas Frecuentes -->
+        <div id="faq" class="section">
+          <div class="page-header">
+            <h1>Preguntas Frecuentes</h1>
+            <p>
+              Respuestas a las dudas más comunes organizadas por perfil de
+              usuario
+            </p>
+          </div>
+          <!-- Preguntas generales -->
+          <div class="card">
+            <h2>Generales</h2>
+            <div class="faq-q">
+              ¿Desde qué dispositivos puedo acceder al sistema?
+            </div>
+            <div class="faq-a">
+              El sistema es responsive y puede utilizarse desde computadoras,
+              tabletas y teléfonos inteligentes a través de cualquier navegador
+              web actualizado. No requiere instalación de ninguna aplicación.
+            </div>
+
+            <div class="faq-q">¿Olvidé mi contraseña, qué debo hacer?</div>
+            <div class="faq-a">
+              Contacta a tu administrador del sistema para que restablezca tu
+              contraseña. Recibirás tu contraseña en tu correo corporativo.
+            </div>
+
+            <div class="faq-q">¿La sesión se cierra automáticamente?</div>
+            <div class="faq-a">
+              Sí. Por seguridad, el sistema cerrará la sesión automáticamente
+              después de un período de inactividad.
+            </div>
+          </div>
+          <!-- Preguntas para empleados -->
+          <div class="card">
+            <h2>Para Empleados / Consultores</h2>
+            <div class="faq-q">
+              ¿Puedo registrar tiempo en más de un proyecto el mismo día?
+            </div>
+            <div class="faq-a">
+              Sí. Puedes crear múltiples registros para un mismo día, cada uno
+              asociado a un proyecto diferente.
+            </div>
+
+            <div class="faq-q">
+              ¿Cuántos días hacia atrás puedo registrar tiempos?
+            </div>
+            <div class="faq-a">
+              Generalmente se permiten 7 días de retroactividad. Consulta con tu
+              administrador el límite configurado en tu empresa.
+            </div>
+
+            <div class="faq-q">
+              ¿Qué hago si el proyecto no aparece en la lista?
+            </div>
+            <div class="faq-a">
+              Contacta a tu administrador para que te asigne al proyecto
+              correspondiente. Solo ves los proyectos a los que has sido
+              asignado.
+            </div>
+
+            <div class="faq-q">
+              ¿Puedo registrar horas fraccionadas (menos de 1 hora)?
+            </div>
+            <div class="faq-a">
+              Sí. El sistema acepta decimales: <strong>0.25</strong> = 15 min;
+              <strong>0.5</strong> = 30 min; <strong>0.75</strong> = 45 min;
+              <strong>1.5</strong> = 1h 30 min.
+            </div>
+          </div>
+        </div>
+
+        <!-- Soporte Técnico -->
+        <div id="soporte" class="section">
+          <div class="page-header">
+            <h1>Soporte y Contacto</h1>
+            <p>Canales de atención para reportar problemas o solicitar ayuda</p>
+          </div>
+          <!-- Tabla de soporte técnico -->
+          <!-- <div class="card">
+            <h2>Canales de Soporte</h2>
+            <p>
+              Si experimentas problemas técnicos o tienes dudas sobre el uso del
+              sistema, puedes contactar al equipo de soporte de SCL Consultores:
+            </p>
+            <div class="tbl-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Canal de soporte</th>
+                    <th>Información de contacto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Correo electrónico</strong></td>
+                    <td>soporte@sclconsultores.com.mx</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Sitio web corporativo</strong></td>
+                    <td>
+                      <a href="https://sclconsultores.com.mx" target="_blank"
+                        >https://sclconsultores.com.mx</a
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Sistema de tickets</strong></td>
+                    <td>Disponible dentro del sistema en la opción "Ayuda"</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Horario de atención</strong></td>
+                    <td>
+                      Lunes a Viernes, 9:00 a 18:00 hrs (Hora Ciudad de México)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div> -->
+
+          <!-- Reportar un problema -->
+          <div class="card">
+            <h2>Reportar un Problema</h2>
+            <p>
+              Al reportar un problema, toma encuenta la siguente informción:
+            </p>
+            <ul>
+              <li>
+                <span>Documenta el problema</span>, anota la hora, la acción y
+                el error
+              </li>
+              <li>
+                <span>Captura de pantalla</span>, toma una imagen del error si
+                es posible.
+              </li>
+              <li>
+                <span>Contacta al Administrador</span>, envía un email con los
+                detalles.
+              </li>
+            </ul>
+            <div class="note danger">
+              <span class="note-label">🚫 Importante: </span>
+              No compartas tu contraseña con nadie, incluido el equipo de
+              soporte. El personal de SCL Consultores <strong>nunca</strong> te
+              solicitará tu contraseña de acceso al sistema.
+            </div>
+          </div>
+          <!-- Problemas comuns y soluciones -->
+          <div class="card">
+            <h2>Problemas Comunes y Soluciones</h2>
+            <h3>
+              Si la página no carga, intenta con las siguientes soluciones:
+            </h3>
+            <ul>
+              <li>Recarga la página (Ctrl+R o Cmd+R)</li>
+              <li>Borra el caché del navegador</li>
+              <li>Intenta con otro navegador (Chrome, Firefox, Safari)</li>
+              <li>Verifica tu conexión a internet</li>
+            </ul>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // ── Navegación ────────────────────────────────────────────────
+      function show(id, btn) {
+        document
+          .querySelectorAll(".section")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        document
+          .querySelectorAll("nav button")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // ── Ventana Modal ─────────────────────────────────────────────────────
+      function openModal(id) {
+        document.getElementById(id).classList.add("open");
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+      }
+      document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+        overlay.addEventListener("click", function (e) {
+          if (e.target === this) this.classList.remove("open");
+        });
+      });
+
+      // ── Acordeon para abrir y coultar elementos ─────────────────────────────────────────────────
+      document.querySelectorAll(".accordion-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const panel = this.nextElementSibling;
+          const isOpen = this.classList.contains("open");
+          this.classList.toggle("open");
+          panel.style.display = isOpen ? "none" : "block";
+        });
+      });
+
+      // ── ESC para cerrar el modal ─────────────────────────────────
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          document
+            .querySelectorAll(".modal-overlay.open")
+            .forEach((m) => m.classList.remove("open"));
+        }
+      });
+    </script>
+  </body>
+</html>
