@@ -32,7 +32,7 @@
         --text-light: #666;
         --white: #ffffff;
         --sidebar-w: 260px;
-        --header-h: 64px;
+        --header-h: 99px;
         --radius: 10px;
         --shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
       }
@@ -59,16 +59,17 @@
         height: var(--header-h);
         background: var(--white);
         border-bottom: 1px solid var(--gray-border);
+        box-shadow: 0 2px 4px #0001;
         display: flex;
         align-items: center;
         padding: 0 24px;
         gap: 16px;
       }
       header img {
-        height: 40px;
+        height: 72px;
       }
       .header-title {
-        font-size: 13px;
+        font-size: 15px;
         color: var(--text-light);
         border-left: 1px solid var(--gray-border);
         padding-left: 16px;
@@ -76,7 +77,7 @@
       }
       .header-title strong {
         color: var(--navy);
-        font-size: 14px;
+        font-size: 16px;
         display: block;
       }
 
@@ -96,13 +97,14 @@
         border-radius: 20px;
         padding: 20px 12px;
         position: fixed;
-        top: 70px;
-        bottom: 0;
+        top: 117px;
+        bottom: 20px;
         left: 10px;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
         gap: 2px;
+        box-shadow: 2px 2px 2px #0004;
       }
 
       .nav-group-label {
@@ -154,7 +156,7 @@
       main {
         margin-left: var(--sidebar-w);
         flex: 1;
-        padding: 32px 36px 48px;
+        padding: 20px 36px 2px;
         max-width: 960px;
       }
 
@@ -421,7 +423,7 @@
         <button onclick="show('faq', this)">Preguntas Frecuentes</button>
         <button onclick="show('soporte', this)">Soporte y Contacto</button>
         <button>
-          <a class="download" href="manual_timpos.pdf" target="_blank"
+          <a class="download" href="manual_tiempos.pdf" target="_blank"
             >Descargar Manual</a
           >
         </button>
@@ -456,8 +458,8 @@
           <div class="card">
             <h2>¿Qué es el Sistema de Reporte de Tiempos?</h2>
             <p>
-              Es una aplicación web accesible desde cualquier navegador moderno.
-              Entre sus principales funcionalidades se encuentran:
+              Es una aplicación web accesible desde cualquier navegador. Entre
+              sus principales funcionalidades se encuentran:
             </p>
             <ul>
               <li>Registro de horas trabajadas por proyecto y actividad</li>
@@ -626,9 +628,12 @@
               <li>Acceso rápido para crear un nuevo registro.</li>
             </ul>
           </div>
-          <!-- Registro de entrada y salida -->
+
+          <!-- Registros -->
           <div class="card">
-            <h2>Registro de entrada y salida</h2>
+            <h2>Registros</h2>
+            <!-- Registro de entrada y salida -->
+            <h3>Entrada y Salida</h3>
             <ul>
               <li>
                 El usuario registra su entrada mediante el botón “Registrar
@@ -643,10 +648,8 @@
                 8 horas.
               </li>
             </ul>
-          </div>
-          <!-- Registro de actividades -->
-          <div class="card">
-            <h2>Registrar Actividades</h2>
+            <!-- Registro de actividades -->
+            <h3>Actividades</h3>
             <p>Para agregar un nuevo registro de tiempo:</p>
             <ul>
               <li>
@@ -688,10 +691,8 @@
               30 minutos; 1.5 = 1 hora con 30 minutos. El sistema no acepta
               horas negativas ni valores mayores a 24 por día.
             </div>
-          </div>
-          <!-- Eliminar un registro de tiempo -->
-          <div class="card">
-            <h2>Eliminar un Registro de Tiempo</h2>
+            <!-- Eliminr un registro -->
+            <h3>Eliminar un Registro de Tiempo</h3>
             <ul>
               <li>Localiza el registro en la tabla de tiempos.</li>
               <li>
@@ -710,6 +711,7 @@
               Esta acción no se puede deshacer.
             </div>
           </div>
+
           <!-- Otros registros (Incidencias) -->
           <div class="card">
             <h2>Otros registros (Incidencias)</h2>
@@ -725,6 +727,7 @@
               <li>Cumpleaños permite únicamente un día.</li>
             </ul>
           </div>
+
           <!-- Registros extemporneos -->
           <div class="card">
             <h2>Registros extemporaneos</h2>
@@ -739,10 +742,8 @@
                 normal.
               </li>
             </ul>
-          </div>
-          <!-- Registro mediante calendario -->
-          <div class="card">
-            <h2>Rgistros mediante calendario</h2>
+            <!-- Calendario Interactivo -->
+            <h3>Calendario</h3>
             <ul>
               <li>El sistema proporciona un calendario interactivo.</li>
               <li>Permite seleccionar fechas en cualquier mes del año.</li>
@@ -751,6 +752,7 @@
               </li>
             </ul>
           </div>
+
           <!-- Historial de registros -->
           <div class="card">
             <h2>Historial de Registros</h2>
@@ -763,6 +765,7 @@
               </li>
             </ul>
           </div>
+
           <!-- Reglas del sistema -->
           <div class="card">
             <h2>Reglas del Sistema</h2>
@@ -773,6 +776,14 @@
               <li>
                 Los registros extemporáneos solo aplican para días sin registro.
               </li>
+            </ul>
+            <!-- Buenas Prácticas -->
+            <h3>Buenas Prácticas</h3>
+            <ul>
+              <li>Registrar la entrada al inicio de la jornada.</li>
+              <li>Capturar actividades de forma diaria.</li>
+              <li>Verificar la información antes de guardar.</li>
+              <li>Evitar acumulación de registros extemporáneos.</li>
             </ul>
           </div>
         </div>
@@ -786,9 +797,9 @@
               equipo
             </p>
           </div>
-          <!-- Aporbar un reporte -->
+          <!-- Validar un reporte -->
           <div class="card">
-            <h2>Aprobar un Reporte</h2>
+            <h2>Validar un Reporte</h2>
             <ul>
               <li>
                 Abre el reporte que deseas aprobar desde la tabla de pendientes.
@@ -830,43 +841,6 @@
               </li>
             </ul>
           </div>
-          <!-- Agregar comentarios a un registro -->
-          <div class="card">
-            <h2>Agregar Comentarios a un Registro</h2>
-            <ul>
-              <li>
-                Dentro del detalle del reporte, localiza el registro al que
-                deseas agregar un comentario.
-              </li>
-              <li>Haz clic en el botón de comentarios de ese registro.</li>
-              <li>Escribe tu comentario en el campo de texto que se abre.</li>
-              <li>
-                Haz clic en <strong>"Guardar comentario"</strong>. El comentario
-                quedará visible para el empleado.
-              </li>
-            </ul>
-          </div>
-          <!-- Consultar reportes por empleado y proyecto -->
-          <div class="card">
-            <h2>Consultar Reportes por Empleado y Proyecto</h2>
-            <ul>
-              <li>
-                En el menú principal, selecciona <strong>"Reportes"</strong> o
-                <strong>"Historial del equipo"</strong>.
-              </li>
-              <li>
-                Utiliza los filtros para seleccionar empleado, rango de fechas y
-                proyecto de interés.
-              </li>
-              <li>
-                El sistema mostrará un resumen con el total de horas por período
-                y proyecto.
-              </li>
-              <li>
-                Puedes hacer clic en cualquier registro para ver su detalle.
-              </li>
-            </ul>
-          </div>
         </div>
 
         <!-- Guía deñ Administrador -->
@@ -878,8 +852,166 @@
               del sistema
             </p>
           </div>
+          <!-- Gestión de Usuarios -->
+          <div class="card">
+            <h2>Gestión de Usuarios</h2>
 
-          <div class="card"></div>
+            <h3>Crear un Nuevo Usuario</h3>
+            <ul>
+              <li>En el menú, selecciona "Empleados".</li>
+              <li>Haz clic en el botón "+ Agregar empleado".</li>
+              <li>
+                Completa el formulario: nombre completo, correo electrónico
+                corporativo, rol y supervisor asignado (si aplica).
+              </li>
+              <li>Haz clic en "Guardar empleado " para crear el usuario.</li>
+            </ul>
+
+            <h3>Editar un Usuario Existente</h3>
+            <ul>
+              <li>
+                En "Admin" > "Empleados", localiza el usuario en la tabla.
+              </li>
+              <li>Haz clic en el ícono de editar (📝) correspondiente.</li>
+              <li>
+                Modifica los campos necesarios: nombre, rol, supervisor asignado
+                o estado de la cuenta.
+              </li>
+              <li>Haz clic en "Guardar cambios".</li>
+            </ul>
+
+            <h3>Eliminar un Usuario</h3>
+            <ul>
+              <li>En "Admin" > "Empleados", localiza al usuario.</li>
+              <li>
+                Para eliminar permanentemente: haz clic en el ícono de eliminar
+                (🗑️) y confirma la acción.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Gestión de Clientes -->
+          <div class="card">
+            <h2>Gestión de Clientes</h2>
+
+            <h3>Crear un Nuevo Cliente</h3>
+            <ul>
+              <li>En el menú, selecciona "Clientes".</li>
+              <li>
+                Haz clic en el botón "+ Agregar cliente", selecciona a los
+                socios responsables, y nombre del cliente.
+              </li>
+              <li>Haz clic en el botón “Guardar” para crear al cliente.</li>
+            </ul>
+
+            <h3>Editar un Cliente Existente</h3>
+            <ul>
+              <li>En "Admin" > "Clientes", localiza el cliente en la tabla.</li>
+              <li>Haz clic en el botón de editar.</li>
+              <li>
+                Modifica los campos necesarios: socio responsable o nombre del
+                cliente.
+              </li>
+              <li>Haz clic en "Guardar cambios".</li>
+            </ul>
+
+            <h3>Eliminar un Cliente</h3>
+            <ul>
+              <li>En "Admin" > "Clientes", localiza al cliente.</li>
+              <li>
+                Para eliminar permanentemente: haz clic en el botón de
+                “Eliminar” y confirma la acción.
+              </li>
+            </ul>
+          </div>
+          <!-- Gestión de Proyectos -->
+          <div class="card">
+            <h2>Gestión de Proyectos</h2>
+
+            <h3>Crear un Nuevo Proyecto</h3>
+            <ul>
+              <li>En el menú, selecciona "Proyectos".</li>
+              <li>Haz clic en "+ Agregar proyecto".</li>
+              <li>
+                Completa el formulario: nombre del proyecto, cliente asociado,
+                descripción, horas presupuestadas, actividad a realizar y socio
+                responsable.
+              </li>
+              <li>Haz clic en "Guardar" para crear el proyecto.</li>
+            </ul>
+
+            <h3>Eliminar un Proyecto</h3>
+            <ul>
+              <li>
+                En "Admin" > "Proyectos", localiza el proyecto en la tabla.
+              </li>
+              <li>
+                Haz clic en el botón de editar “Eliminar” para borrar del
+                registro.
+              </li>
+              <li>Confirma la acción.</li>
+            </ul>
+          </div>
+          <!-- Gestión de Actividades -->
+          <div class="card">
+            <h2>Gestión de Actividades</h2>
+
+            <h3>Crear una Nueva Actividad</h3>
+            <ul>
+              <li>En el menú, selecciona "Actividades".</li>
+              <li>Haz clic en "+ Agregar actividad".</li>
+              <li>
+                Completa el formulario: área a la que pertenece y nombre de la
+                actividad.
+              </li>
+              <li>Haz clic en "Guardar" para crear la actividad.</li>
+            </ul>
+
+            <h3>Editar una Actividad Existente</h3>
+            <ul>
+              <li>
+                En "Admin" > "Actividades", localiza la actividad en la tabla.
+              </li>
+              <li>Haz clic en el botón de editar.</li>
+              <li>
+                Modifica los campos necesarios: área a la que pertenece y nombre
+                de la actividad.
+              </li>
+              <li>Haz clic en "Guardar cambios".</li>
+            </ul>
+
+            <h3>Eliminar una Actividad</h3>
+            <ul>
+              <li>
+                En "Admin" > "actividad", localiza la actividad en la tabla.
+              </li>
+              <li>Haz clic en el botón “Eliminar” para borrar del registro.</li>
+              <li>Confirma la acción.</li>
+            </ul>
+          </div>
+          <!-- Exportación de Reportes -->
+          <div class="card">
+            <h2>Exportación de Reportes</h2>
+            <ul>
+              <li>En el menú, selecciona "Reportes" > "Generar reporte".</li>
+              <li>Define el rango de fecha.</li>
+              <li>
+                Selecciona el tipo de reporte: de asistencias, actividades o
+                ambos.
+              </li>
+              <li>
+                Haz clic en "Descargar". El archivo .xlsx se descargará
+                automáticamente a tu computadora.
+              </li>
+            </ul>
+
+            <div class="note success">
+              <span class="note-label">✅ Recomendación: </span>
+              Los reportes exportados en Excel pueden procesarse con tablas
+              dinámicas para análisis más detallados. Se recomienda una rutina
+              periódica de exportación para respaldo de información.
+            </div>
+          </div>
         </div>
 
         <!-- Preguntas Frecuentes -->
@@ -951,6 +1083,33 @@
               <strong>0.5</strong> = 30 min; <strong>0.75</strong> = 45 min;
               <strong>1.5</strong> = 1h 30 min.
             </div>
+          </div>
+          <!-- Pregunras para supervisores -->
+          <div class="card">
+            <h2>Para Supervisores / Gerentes</h2>
+            <ul>
+              <div class="faq-q">
+                ¿Puedo ver los reportes de empleados fuera de mi equipo?
+              </div>
+              <div class="faq-a">
+                R: No en condiciones normales. Solo tienes acceso a los reportes
+                de los empleados asignados a tu cargo. Para acceso adicional,
+                comunícate con el administrador.
+              </div>
+            </ul>
+          </div>
+          <!-- Preguntas para administradores -->
+          <div class="card">
+            <h2>Para Administradores</h2>
+            <ul>
+              <div class="faq-q">
+                ¿Qué sucede con los registros de un empleado eliminado?
+              </div>
+              <div class="faq-a">
+                R: Los registros de un usuario eliminado pueden perderse
+                definitivamente.
+              </div>
+            </ul>
           </div>
         </div>
 
