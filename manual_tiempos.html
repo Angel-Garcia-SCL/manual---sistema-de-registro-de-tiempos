@@ -415,8 +415,8 @@
         <button onclick="show('acceso', this)">Acceso al Sistema</button>
 
         <span class="nav-group-label">Por Rol</span>
-        <button onclick="show('empleado', this)">Empleado / Consultor</button>
-        <button onclick="show('supervisor', this)">Supervisor / Gerente</button>
+        <button onclick="show('empleado', this)">Colaborador</button>
+        <button onclick="show('supervisor', this)">Jefe a cargo</button>
         <button onclick="show('admin', this)">Administrador</button>
 
         <span class="nav-group-label">Consultas</span>
@@ -444,8 +444,8 @@
             <h2>Introducción</h2>
             <p>
               Esta plataforma permite a los colaboradores registrar las horas de
-              trabajo dedicadas a proyectos y actividades, mientras que
-              supervisores y administradores pueden revisar, aprobar y analizar
+              trabajo dedicadas a proyectos y actividades, mientras que los
+              jefes a cargo y administradores pueden revisar, aprobar y analizar
               la información en tiempo real.
             </p>
             <p>
@@ -466,7 +466,9 @@
               <li>
                 Seguimiento del tiempo en múltiples proyectos simultáneamente
               </li>
-              <li>Aprobación o rechazo de reportes por parte del supervisor</li>
+              <li>
+                Aprobación o rechazo de reportes por parte del jefe a cargo
+              </li>
               <li>
                 Consulta de reportes históricos y estadísticas por período
               </li>
@@ -491,25 +493,26 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Empleado / Consultor</strong></td>
+                    <td><strong>Colaborador</strong></td>
                     <td>
                       Registra sus horas de trabajo en proyectos y actividades
                       asignadas.
                     </td>
                     <td>
-                      Registrar tiempos diarios, seleccionar proyectos, agregar
-                      descripción, enviar reporte semanal.
+                      Registrar tiempos diarios de entrada y salida, seleccionar
+                      proyectos, agregar descripción, enviar reportes.
                     </td>
                   </tr>
                   <tr>
-                    <td><strong>Supervisor / Gerente</strong></td>
+                    <td><strong>Jefe a cargo</strong></td>
                     <td>
-                      Revisa y aprueba los reportes de tiempos del equipo a su
-                      cargo.
+                      Registra sus horas de trabajo, revisar y aprobar los
+                      reportes de tiempos del equipo a su cargo.
                     </td>
                     <td>
-                      Ver reportes del equipo, aprobar o rechazar registros,
-                      agregar comentarios.
+                      Registrar tiempos diarios de entrada y salida, ver
+                      reportes del equipo, aprobar o rechazar registros, agregar
+                      comentarios.
                     </td>
                   </tr>
                   <tr>
@@ -548,15 +551,20 @@
               <li>Abre tu navegador web.</li>
               <li>
                 En la barra de direcciones, escribe:
-                <code
-                  >https://sclconsultores.com.mx/reportetiempos/login.php</code
+                <a
+                  href="https://sclconsultores.com.mx/reportetiempos/login.php"
+                  target="_blank"
+                  >https://sclconsultores.com.mx/reportetiempos/login.php</a
                 >
               </li>
               <li>
                 Aparecerá la pantalla de inicio de sesión con el logotipo de SCL
                 Consultores y el mensaje <strong>"¡Bienvenido!"</strong>.
               </li>
-              <li>Escribe tus claves de acceso.</li>
+              <li>
+                Escribe tus claves de acceso. Recuerda que tu usuario es tu
+                correo corporativo y tu contraseña es tu numero de empleado
+              </li>
               <li>
                 Haz clic en <strong>"Acceder"</strong>. Si tus credenciales son
                 correctas, serás redirigido al panel principal.
@@ -579,11 +587,12 @@
             </p>
             <ul>
               <li>
-                Localiza tu nombre de usuario en la esquina superior derecha
-                dentro de la barra de navegación.
+                Localiza la inical de tu nombre de usuario en la esquina
+                superior derecha dentro de la barra de navegación.
               </li>
               <li>
-                Haz clic en tu nombre; se desplegará un menú con opciones.
+                Haz clic en la inical de tu nombre; se desplegará un menú con
+                opciones.
               </li>
               <li>
                 Selecciona <strong>"Cerrar sesión"</strong>. Tu sesión se
@@ -602,7 +611,7 @@
         <!-- Guía del Empleado -->
         <div id="empleado" class="section">
           <div class="page-header">
-            <h1>Guía para el Empleado / Consultor</h1>
+            <h1>Guía para el Colaborador</h1>
             <p>
               Todo lo que necesitas saber para registrar y gestionar tus tiempos
               diarios
@@ -610,7 +619,7 @@
           </div>
           <!-- Panel principal -->
           <div class="card">
-            <h2>Pantalla Principal del Empleado</h2>
+            <h2>Pantalla Principal del colaborador</h2>
             <p>
               El panel principal es la pantalla donde podrás llevar a cabo tus
               registros de actividades diarias, consta de las siguientes
@@ -644,8 +653,8 @@
                 hora.
               </li>
               <li>
-                La salida se calcula automáticamente con base en una jornada de
-                8 horas.
+                La salida se calcula automáticamente con base en la jornada
+                laboral de cada usuario.
               </li>
             </ul>
             <!-- Registro de actividades -->
@@ -654,42 +663,39 @@
             <ul>
               <li>
                 Desde el panel principal, haz clic en el botón "Agregar
-                actividad por proyecto”.
+                actividad”.
               </li>
               <li>
                 Se abrirá el formulario de registro. Se establecerá la hora
                 actual como la hora de inicio, automáticamente.
               </li>
               <li>
-                En el campo "Hora fin", ingresa el número de horas dedicadas (en
-                formato decimal, ej. 1.5 para una hora 30 minutos).
+                En el campo "Hora fin", ingresa el número de horas dedicadas.
               </li>
               <li>
                 En el campo "Proyectos disponibles", selecciona de la lista
                 desplegable el proyecto al que corresponde el trabajo.
               </li>
               <li>
-                En el campo “Jefe responsable”, selección a tu gerente
-                encargado.
+                En el campo “Jefe responsable”, selección al jefe encargado de
+                tu equipo.
               </li>
               <li>
-                En el campo “Cliente”, selecciona a quien será el cliente de la
-                actividad.
+                En el campo “Cliente”, selecciona al cliente de la actividad.
               </li>
               <li>
-                En el campo "Descripción libre", escribe la descripción de la
-                actividad realizada.
+                En el campo "Descripción libre", escribe una breve descripción
+                de la actividad realizada.
               </li>
               <li>
                 Haz clic en "Guardar actividad por proyecto" para registrar la
                 entrada. Aparecerá en tu tabla de tiempos.
               </li>
             </ul>
-            <div class="note warn">
-              <span class="note-label">⚠️ Importante: </span>
-              Las horas deben registrarse en formato decimal. Por ejemplo: 0.5 =
-              30 minutos; 1.5 = 1 hora con 30 minutos. El sistema no acepta
-              horas negativas ni valores mayores a 24 por día.
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Es obligatorio completar todos los campos de la ventana de
+              registro de actividad
             </div>
             <!-- Eliminr un registro -->
             <h3>Eliminar un Registro de Tiempo</h3>
@@ -708,24 +714,69 @@
             </ul>
             <div class="note danger">
               <span class="note-label">🚫 Importante: </span>
-              Esta acción no se puede deshacer.
+              Solo se pueden eliminar los registros que aun no hayan sido
+              aprobados por tu jefe a cargo. Esta acción no se puede deshacer.
             </div>
           </div>
 
           <!-- Otros registros (Incidencias) -->
           <div class="card">
             <h2>Otros registros (Incidencias)</h2>
+            <p>
+              Tipos disponibles: Vacaciones, Permisos, Incapacidad, Cumpleaños.
+            </p>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              El día de cumpleaños se registra como asueto automaticamente como
+              un beneficio extra si es que cae en día laboral.
+            </div>
+
+            <h3>Registro de Vacaciones y Permisos</h3>
             <ul>
-              <li>Permite registrar días sin actividad laboral.</li>
               <li>
-                Tipos disponibles: Vacaciones, Permisos, Incapacidad,
-                Cumpleaños.
+                Desde el panel principal, haz clic en el botón "Otros
+                registros”.
               </li>
+              <li>Selecciona la opción deseada (vacaciones o permisos).</li>
               <li>
-                Vacaciones, permisos e incapacidades permiten múltiples días.
+                Se desplegará un calendario donde podras seleccionar multiples
+                dias.
               </li>
-              <li>Cumpleaños permite únicamente un día.</li>
+              <li>Agrega un comentario (opcional).</li>
+              <li>
+                Haz clic en "Guardar registro" para registrar los dias
+                seleccionados. Aparecerán en tu tabla de historial.
+              </li>
             </ul>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Los registros de vacaciones y permisos requieren previa
+              autorización del jefe a cargo
+            </div>
+
+            <h3>Registro de Incapacidad</h3>
+            <ul>
+              <li>
+                Desde el panel principal, haz clic en el botón "Otros
+                registros”.
+              </li>
+              <li>Selecciona la opción "Incapacidad".</li>
+              <li>
+                Se desplegará un calendario donde podras seleccionar multiples
+                dias.
+              </li>
+              <li>Agrega un comentario (opcional).</li>
+              <li>Agrega la docuemntación solicitada por recursos humanos.</li>
+              <li>
+                Haz clic en "Guardar registro" para registrar los dias
+                seleccionados. Aparecerán en tu tabla de historial.
+              </li>
+            </ul>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Los registros de Incapacidad requieren autorizacion por parte de
+              recursos humanos
+            </div>
           </div>
 
           <!-- Registros extemporneos -->
@@ -764,6 +815,11 @@
                 calendario.
               </li>
             </ul>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Aqui puede visualizar el estado de todo el historial de registros
+              (registros aprobados, rechazados o pendients).
+            </div>
           </div>
 
           <!-- Reglas del sistema -->
@@ -777,29 +833,215 @@
                 Los registros extemporáneos solo aplican para días sin registro.
               </li>
             </ul>
-            <!-- Buenas Prácticas -->
-            <h3>Buenas Prácticas</h3>
-            <ul>
-              <li>Registrar la entrada al inicio de la jornada.</li>
-              <li>Capturar actividades de forma diaria.</li>
-              <li>Verificar la información antes de guardar.</li>
-              <li>Evitar acumulación de registros extemporáneos.</li>
-            </ul>
+            <div class="note success">
+              <span class="note-label">✅ Recomendación: </span>
+              Procura registrar tu entrada y las actividades de forma diaria y
+              verifica la información antes de guadar. <br />
+              Evita acumular registros extemporaneos.
+            </div>
           </div>
         </div>
 
         <!-- Guía del Superviso -->
         <div id="supervisor" class="section">
           <div class="page-header">
-            <h1>Guía para el Supervisor / Gerente</h1>
+            <h1>Guía para el Jefe a Cargo</h1>
             <p>
               Revisión, aprobación y gestión de los reportes de tiempo del
               equipo
             </p>
           </div>
+          <!-- Panel principal -->
+          <div class="card">
+            <h2>Pantalla Principal del Jefe a Cargo</h2>
+            <p>
+              El panel principal es la pantalla donde podrás llevar a cabo tus
+              registros de actividades diarias, consta de las siguientes
+              funciones:
+            </p>
+            <ul>
+              <li>
+                Vista del total de horas registradas en la jornada actual.
+              </li>
+              <li>
+                Listado de entradas de tiempo con fecha, proyecto, actividad y
+                horas.
+              </li>
+              <li>Acceso rápido para crear un nuevo registro.</li>
+              <li>
+                Pestaña para gestionar los reportes están pendientes o
+                aprobados.
+              </li>
+              <li>Pestaña para gestionar la asignación de actividades.</li>
+            </ul>
+          </div>
+          <!-- Registros -->
+          <div class="card">
+            <h2>Registros</h2>
+            <!-- Registro de entrada y salida -->
+            <h3>Entrada y Salida</h3>
+            <ul>
+              <li>
+                El usuario registra su entrada mediante el botón “Registrar
+                entrada”.
+              </li>
+              <li>
+                El sistema solicita confirmación y registra automáticamente la
+                hora.
+              </li>
+              <li>
+                La salida se calcula automáticamente con base en la jornada
+                laboral de cada usuario.
+              </li>
+            </ul>
+            <!-- Registro de actividades -->
+            <h3>Actividades</h3>
+            <p>Para agregar un nuevo registro de tiempo:</p>
+            <ul>
+              <li>
+                Desde el panel principal, haz clic en el botón "Agregar
+                actividad”.
+              </li>
+              <li>
+                Se abrirá el formulario de registro. Se establecerá la hora
+                actual como la hora de inicio, automáticamente.
+              </li>
+              <li>
+                En el campo "Hora fin", ingresa el número de horas dedicadas.
+              </li>
+              <li>
+                En el campo "Proyectos disponibles", selecciona de la lista
+                desplegable el proyecto al que corresponde el trabajo.
+              </li>
+              <li>
+                En el campo “Jefe responsable”, selección al jefe encargado de
+                tu equipo.
+              </li>
+              <li>
+                En el campo “Cliente”, selecciona al cliente de la actividad.
+              </li>
+              <li>
+                En el campo "Descripción libre", escribe una breve descripción
+                de la actividad realizada.
+              </li>
+              <li>
+                Haz clic en "Guardar actividad por proyecto" para registrar la
+                entrada. Aparecerá en tu tabla de tiempos.
+              </li>
+            </ul>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Es obligatorio completar todos los campos de la ventana de
+              registro de actividad
+            </div>
+            <!-- Eliminr un registro -->
+            <h3>Eliminar un Registro de Tiempo</h3>
+            <ul>
+              <li>Localiza el registro en la tabla de tiempos.</li>
+              <li>
+                Haz clic en el ícono de <strong>"Eliminar"</strong> al final de
+                la fila.
+              </li>
+              <li>
+                Confirma la acción en la ventana de confirmación que aparecerá.
+              </li>
+              <li>
+                El registro se eliminará permanentemente de la base de datos.
+              </li>
+            </ul>
+            <div class="note danger">
+              <span class="note-label">🚫 Importante: </span>
+              Solo se pueden eliminar los registros que aun no hayan sido
+              aprobados por tu jefe a cargo. Esta acción no se puede deshacer.
+            </div>
+          </div>
+          <!-- Otros registros (Incidencias) -->
+          <div class="card">
+            <h2>Otros registros (Incidencias)</h2>
+            <p>
+              Tipos disponibles: Vacaciones, Permisos, Incapacidad, Cumpleaños.
+            </p>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              El día de cumpleaños se registra como asueto automaticamente como
+              un beneficio extra si es que cae en día laboral.
+            </div>
+
+            <h3>Registro de Vacaciones y Permisos</h3>
+            <ul>
+              <li>
+                Desde el panel principal, haz clic en el botón "Otros
+                registros”.
+              </li>
+              <li>Selecciona la opción deseada (vacaciones o permisos).</li>
+              <li>
+                Se desplegará un calendario donde podras seleccionar multiples
+                dias.
+              </li>
+              <li>Agrega un comentario (opcional).</li>
+              <li>
+                Haz clic en "Guardar registro" para registrar los dias
+                seleccionados. Aparecerán en tu tabla de historial.
+              </li>
+            </ul>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Los registros de vacaciones y permisos requieren previa
+              autorización del jefe a cargo
+            </div>
+
+            <h3>Registro de Incapacidad</h3>
+            <ul>
+              <li>
+                Desde el panel principal, haz clic en el botón "Otros
+                registros”.
+              </li>
+              <li>Selecciona la opción "Incapacidad".</li>
+              <li>
+                Se desplegará un calendario donde podras seleccionar multiples
+                dias.
+              </li>
+              <li>Agrega un comentario (opcional).</li>
+              <li>Agrega la docuemntación solicitada por recursos humanos.</li>
+              <li>
+                Haz clic en "Guardar registro" para registrar los dias
+                seleccionados. Aparecerán en tu tabla de historial.
+              </li>
+            </ul>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Los registros de Incapacidad requieren autorizacion por parte de
+              recursos humanos
+            </div>
+          </div>
+          <!-- Registros extemporneos -->
+          <div class="card">
+            <h2>Registros extemporaneos</h2>
+            <ul>
+              <li>
+                Permite registrar jornadas pasadas no capturadas previamente.
+              </li>
+              <li>Solo se pueden seleccionar días sin registro existente.</li>
+              <li>El usuario define manualmente la hora de entrada.</li>
+              <li>
+                Posteriormente puede registrar actividades como en un registro
+                normal.
+              </li>
+            </ul>
+            <!-- Calendario Interactivo -->
+            <h3>Calendario</h3>
+            <ul>
+              <li>El sistema proporciona un calendario interactivo.</li>
+              <li>Permite seleccionar fechas en cualquier mes del año.</li>
+              <li>
+                Se puede agregar un comentario opcional para cada registro.
+              </li>
+            </ul>
+          </div>
           <!-- Validar un reporte -->
           <div class="card">
-            <h2>Validar un Reporte</h2>
+            <h2>Validación</h2>
+            <h3>Validar un Reporte</h3>
             <ul>
               <li>
                 Abre el reporte que deseas aprobar desde la tabla de pendientes.
@@ -820,10 +1062,8 @@
               Revisa con detenimiento cada registro antes de aprobar,
               especialmente las horas asignadas a proyectos de clientes.
             </div>
-          </div>
-          <!-- Rechazar un reporte -->
-          <div class="card">
-            <h2>Rechazar un Reporte</h2>
+
+            <h3>Rechazar un Reporte</h3>
             <ul>
               <li>Abre el reporte que deseas rechazar.</li>
               <li>Identifica los registros con problemas.</li>
@@ -840,6 +1080,13 @@
                 recibirá una notificación con tus comentarios.
               </li>
             </ul>
+            <div class="note info">
+              <span class="note-label">💡 Recordatorio: </span>
+              Puedes consultar el historial de registros del dia en curso de
+              cada empleado a tu cargo haciendo clic sobre su nombre. Tambien
+              puedes aplicar filtros de fecha para ver historial completo de un
+              determinado periodo.
+            </div>
           </div>
         </div>
 
@@ -851,6 +1098,27 @@
               Gestión completa de usuarios, proyectos, clientes y configuración
               del sistema
             </p>
+          </div>
+          <!-- Panel principal -->
+          <div class="card">
+            <h2>Pantalla Principal del Administrador</h2>
+            <p>
+              El panel principal es la pantalla donde podrás llevar a cabo la
+              gestion de empleados, clientes y proyectos, consta de las
+              siguientes funciones:
+            </p>
+            <ul>
+              <li>
+                Vista general del sistema con resumen del numero de empleados,
+                clientes, poyectos, actividades y registros diarios.
+              </li>
+              <li>
+                Menú lateral para gestionar empleados, clintes, proyectos y
+                actividades.
+              </li>
+              <li>Acceso rápido para exportación de reportes.</li>
+              <li>Botón para cerrar sesión.</li>
+            </ul>
           </div>
           <!-- Gestión de Usuarios -->
           <div class="card">
@@ -866,12 +1134,9 @@
               </li>
               <li>Haz clic en "Guardar empleado " para crear el usuario.</li>
             </ul>
-
             <h3>Editar un Usuario Existente</h3>
             <ul>
-              <li>
-                En "Admin" > "Empleados", localiza el usuario en la tabla.
-              </li>
+              <li>En el menú, selecciona "Empleados".</li>
               <li>Haz clic en el ícono de editar (📝) correspondiente.</li>
               <li>
                 Modifica los campos necesarios: nombre, rol, supervisor asignado
@@ -879,17 +1144,14 @@
               </li>
               <li>Haz clic en "Guardar cambios".</li>
             </ul>
-
             <h3>Eliminar un Usuario</h3>
             <ul>
-              <li>En "Admin" > "Empleados", localiza al usuario.</li>
+              <li>En el menú, selecciona "Empleados".</li>
               <li>
-                Para eliminar permanentemente: haz clic en el ícono de eliminar
-                (🗑️) y confirma la acción.
+                Haz clic en el ícono de eliminar (🗑️) y confirma la acción.
               </li>
             </ul>
           </div>
-
           <!-- Gestión de Clientes -->
           <div class="card">
             <h2>Gestión de Clientes</h2>
@@ -903,10 +1165,9 @@
               </li>
               <li>Haz clic en el botón “Guardar” para crear al cliente.</li>
             </ul>
-
             <h3>Editar un Cliente Existente</h3>
             <ul>
-              <li>En "Admin" > "Clientes", localiza el cliente en la tabla.</li>
+              <li>En el menú, selecciona "Clientes".</li>
               <li>Haz clic en el botón de editar.</li>
               <li>
                 Modifica los campos necesarios: socio responsable o nombre del
@@ -914,14 +1175,10 @@
               </li>
               <li>Haz clic en "Guardar cambios".</li>
             </ul>
-
             <h3>Eliminar un Cliente</h3>
             <ul>
-              <li>En "Admin" > "Clientes", localiza al cliente.</li>
-              <li>
-                Para eliminar permanentemente: haz clic en el botón de
-                “Eliminar” y confirma la acción.
-              </li>
+              <li>En el menú, selecciona "Clientes".</li>
+              <li>Haz clic en el botón de “Eliminar” y confirma la acción.</li>
             </ul>
           </div>
           <!-- Gestión de Proyectos -->
@@ -939,21 +1196,27 @@
               </li>
               <li>Haz clic en "Guardar" para crear el proyecto.</li>
             </ul>
-
+            <h3>Editar un Proyecto Existente</h3>
+            <ul>
+              <li>En el menú, selecciona "Proyectos".</li>
+              <li>Haz clic en el botón de editar.</li>
+              <li>
+                Modifica los campos necesarios: socio, cliente, proyecto y
+                actividad.
+              </li>
+              <li>Haz clic en "Guardar cambios".</li>
+            </ul>
             <h3>Eliminar un Proyecto</h3>
             <ul>
+              <li>En el menú, selecciona "Proyectos".</li>
               <li>
-                En "Admin" > "Proyectos", localiza el proyecto en la tabla.
-              </li>
-              <li>
-                Haz clic en el botón de editar “Eliminar” para borrar del
-                registro.
+                Haz clic en el botón de “Eliminar” para borrar del registro.
               </li>
               <li>Confirma la acción.</li>
             </ul>
           </div>
           <!-- Gestión de Actividades -->
-          <div class="card">
+          <!-- <div class="card">
             <h2>Gestión de Actividades</h2>
 
             <h3>Crear una Nueva Actividad</h3>
@@ -988,12 +1251,15 @@
               <li>Haz clic en el botón “Eliminar” para borrar del registro.</li>
               <li>Confirma la acción.</li>
             </ul>
-          </div>
+          </div> -->
           <!-- Exportación de Reportes -->
           <div class="card">
             <h2>Exportación de Reportes</h2>
             <ul>
-              <li>En el menú, selecciona "Reportes" > "Generar reporte".</li>
+              <li>
+                En el menú, selecciona "Reportes" y luego slecciona la opción
+                "Generar reporte".
+              </li>
               <li>Define el rango de fecha.</li>
               <li>
                 Selecciona el tipo de reporte: de asistencias, actividades o
@@ -1026,67 +1292,64 @@
           <!-- Preguntas generales -->
           <div class="card">
             <h2>Generales</h2>
-            <div class="faq-q">
-              ¿Desde qué dispositivos puedo acceder al sistema?
-            </div>
-            <div class="faq-a">
-              El sistema es responsive y puede utilizarse desde computadoras,
-              tabletas y teléfonos inteligentes a través de cualquier navegador
-              web actualizado. No requiere instalación de ninguna aplicación.
-            </div>
+            <ul>
+              <div class="faq-q">
+                ¿Desde qué dispositivos puedo acceder al sistema?
+              </div>
+              <div class="faq-a">
+                El sistema puede utilizarse desde computadoras, tabletas y
+                teléfonos inteligentes a través de cualquier navegador web
+                actualizado. No requiere instalación de ninguna aplicación.
+              </div>
 
-            <div class="faq-q">¿Olvidé mi contraseña, qué debo hacer?</div>
-            <div class="faq-a">
-              Contacta a tu administrador del sistema para que restablezca tu
-              contraseña. Recibirás tu contraseña en tu correo corporativo.
-            </div>
+              <div class="faq-q">¿Olvidé mi contraseña, qué debo hacer?</div>
+              <div class="faq-a">
+                Recuerda que el usuario es tu correo corporativo y la contraseña
+                es tu numero de empleado, si no recuerdas alguna de las claves
+                de acceso contacta a tu administrador del sistema.
+              </div>
 
-            <div class="faq-q">¿La sesión se cierra automáticamente?</div>
-            <div class="faq-a">
-              Sí. Por seguridad, el sistema cerrará la sesión automáticamente
-              después de un período de inactividad.
-            </div>
+              <div class="faq-q">¿La sesión se cierra automáticamente?</div>
+              <div class="faq-a">
+                Sí. Por seguridad, el sistema cerrará la sesión automáticamente
+                después de un período de inactividad.
+              </div>
+            </ul>
           </div>
           <!-- Preguntas para empleados -->
           <div class="card">
-            <h2>Para Empleados / Consultores</h2>
-            <div class="faq-q">
-              ¿Puedo registrar tiempo en más de un proyecto el mismo día?
-            </div>
-            <div class="faq-a">
-              Sí. Puedes crear múltiples registros para un mismo día, cada uno
-              asociado a un proyecto diferente.
-            </div>
+            <h2>Para Colaboradores</h2>
+            <ul>
+              <div class="faq-q">
+                ¿Puedo registrar tiempo en más de un proyecto el mismo día?
+              </div>
+              <div class="faq-a">
+                Sí. Puedes crear múltiples registros para un mismo día, cada uno
+                asociado a un proyecto diferente.
+              </div>
 
-            <div class="faq-q">
-              ¿Cuántos días hacia atrás puedo registrar tiempos?
-            </div>
-            <div class="faq-a">
-              Generalmente se permiten 7 días de retroactividad. Consulta con tu
-              administrador el límite configurado en tu empresa.
-            </div>
+              <div class="faq-q">
+                ¿Cuántos días hacia atrás puedo registrar tiempos?
+              </div>
+              <div class="faq-a">
+                Se permiten registrar de manera extemporanea unicamente los dias
+                del mes en curso.
+              </div>
 
-            <div class="faq-q">
-              ¿Qué hago si el proyecto no aparece en la lista?
-            </div>
-            <div class="faq-a">
-              Contacta a tu administrador para que te asigne al proyecto
-              correspondiente. Solo ves los proyectos a los que has sido
-              asignado.
-            </div>
-
-            <div class="faq-q">
-              ¿Puedo registrar horas fraccionadas (menos de 1 hora)?
-            </div>
-            <div class="faq-a">
-              Sí. El sistema acepta decimales: <strong>0.25</strong> = 15 min;
-              <strong>0.5</strong> = 30 min; <strong>0.75</strong> = 45 min;
-              <strong>1.5</strong> = 1h 30 min.
-            </div>
+              <div class="faq-q">
+                ¿Qué hago si el proyecto no aparece en la lista?
+              </div>
+              <div class="faq-a">
+                Contacta a tu administrador para que verifique la existencia del
+                proyecto, y en su defecto carge el nuevo proyecto
+                correspondiente. Solo ves los proyectos que han sido cargados al
+                sistema.
+              </div>
+            </ul>
           </div>
           <!-- Pregunras para supervisores -->
           <div class="card">
-            <h2>Para Supervisores / Gerentes</h2>
+            <h2>Para Jefes a cargo</h2>
             <ul>
               <div class="faq-q">
                 ¿Puedo ver los reportes de empleados fuera de mi equipo?
