@@ -597,25 +597,222 @@
         visibility: visible;
         transform: translateX(-50%) translateY(-8px);
       }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .hamburger-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--navy);
+        cursor: pointer;
+        padding: 8px;
+        z-index: 110;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+      }
+      .hamburger-btn:hover {
+        background-color: var(--blue-light);
+      }
+      .hamburger-btn line {
+        transition:
+          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.2s ease;
+        transform-origin: center;
+      }
+      .hamburger-btn.open .line-1 {
+        transform: translateY(6px) rotate(45deg);
+      }
+      .hamburger-btn.open .line-2 {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .hamburger-btn.open .line-3 {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 104;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .sidebar-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* ── RESPONSIVE DESIGN ───────────────────────────────────── */
+      @media (max-width: 768px) {
+        header {
+          padding: 0 16px;
+          justify-content: space-between;
+          height: 70px;
+        }
+        .header-brand {
+          gap: 10px;
+        }
+        header img {
+          height: 40px;
+        }
+        .header-title {
+          font-size: 11px;
+          padding-left: 10px;
+          margin-left: 0;
+        }
+        .header-title strong {
+          font-size: 13px;
+        }
+        .hamburger-btn {
+          display: flex;
+        }
+
+        .layout {
+          padding-top: 70px;
+        }
+
+        nav {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: -290px;
+          width: 280px;
+          border-radius: 0;
+          box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+          transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 105;
+          margin: 0;
+          padding: 90px 16px 20px;
+        }
+        nav.open {
+          left: 0;
+        }
+
+        main {
+          margin-left: 0;
+          padding: 16px 12px;
+        }
+
+        .card {
+          padding: 16px;
+          margin-bottom: 12px;
+        }
+
+        .cover-hero {
+          padding: 24px 16px;
+          margin-bottom: 16px;
+        }
+        .cover-hero h1 {
+          font-size: 22px;
+        }
+        .cover-hero .subtitle {
+          font-size: 13px;
+          margin-bottom: 12px;
+        }
+
+        .page-header {
+          padding: 18px 16px;
+          margin-bottom: 16px;
+        }
+        .page-header h1 {
+          font-size: 18px;
+        }
+        .page-header p {
+          font-size: 12px;
+        }
+
+        /* Adjust steps list on small screens */
+        .steps li {
+          gap: 10px;
+        }
+
+        /* Responsive image annotations containers */
+        .screenshot-container {
+          padding: 8px;
+        }
+      }
+
+      /* Centrado para pantallas grandes (>1250px) */
+      @media (min-width: 1250px) {
+        .layout {
+          max-width: 1250px;
+          margin: 0 auto;
+        }
+        nav {
+          left: calc((100vw - 1250px) / 2 + 10px);
+        }
+        main {
+          margin-left: calc(var(--sidebar-w) + 20px);
+          margin-right: auto;
+        }
+        header {
+          padding: 0 calc((100vw - 1250px) / 2 + 24px);
+        }
+      }
     </style>
   </head>
   <body>
     <!-- HEADER -->
     <header>
-      <img
-        src="https://sclconsultores.com.mx/imagenesRegistros/logo.svg"
-        alt="SCL Consultores"
-        onerror="
-          this.style.display = 'none';
-          document.querySelector('.header-title').style.paddingLeft = '0';
-          document.querySelector('.header-title').style.borderLeft = 'none';
-        "
-      />
-      <div class="header-title">
-        <strong>Sistema de Reporte de Tiempos</strong>
-        Manual de Usuario
+      <div class="header-brand">
+        <img
+          src="https://sclconsultores.com.mx/imagenesRegistros/logo.svg"
+          alt="SCL Consultores"
+          onerror="
+            this.style.display = 'none';
+            document.querySelector('.header-title').style.paddingLeft = '0';
+            document.querySelector('.header-title').style.borderLeft = 'none';
+          "
+        />
+        <div class="header-title">
+          <strong>Sistema de Reporte de Tiempos</strong>
+          Manual de Usuario
+        </div>
       </div>
+
+      <button
+        id="hamburger-menu"
+        class="hamburger-btn"
+        aria-label="Menú"
+        onclick="toggleMenu()"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+        >
+          <line x1="4" y1="6" x2="20" y2="6" class="line-1"></line>
+          <line x1="4" y1="12" x2="20" y2="12" class="line-2"></line>
+          <line x1="4" y1="18" x2="20" y2="18" class="line-3"></line>
+        </svg>
+      </button>
     </header>
+
+    <div
+      id="sidebar-overlay"
+      class="sidebar-overlay"
+      onclick="toggleMenu()"
+    ></div>
 
     <div class="layout">
       <!-- SIDEBAR -->
@@ -2832,6 +3029,39 @@
           .forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
         window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // Cerrar menú en dispositivos móviles tras seleccionar sección
+        if (window.innerWidth <= 768) {
+          closeMenu();
+        }
+      }
+
+      function toggleMenu() {
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebar-overlay");
+        const btn = document.getElementById("hamburger-menu");
+
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("active");
+        btn.classList.toggle("open");
+
+        // Evitar scroll en el cuerpo cuando el menú está abierto
+        if (sidebar.classList.contains("open")) {
+          document.body.style.overflow = "hidden";
+        } else {
+          document.body.style.overflow = "";
+        }
+      }
+
+      function closeMenu() {
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebar-overlay");
+        const btn = document.getElementById("hamburger-menu");
+
+        sidebar.classList.remove("open");
+        overlay.classList.remove("active");
+        btn.classList.remove("open");
+        document.body.style.overflow = "";
       }
     </script>
   </body>
