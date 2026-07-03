@@ -497,7 +497,7 @@
         background: var(--white);
         border: 1px solid var(--gray-border);
         border-radius: var(--radius);
-        padding: 12px 16px;
+        padding: 8px 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         max-width: 250px;
         font-size: 14px;
@@ -552,50 +552,52 @@
         color: var(--text-light);
       }
 
-      /* Tooltip para puntos individuales */
-      .annotation-point::before {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--navy);
-        color: var(--white);
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 11px;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.2s ease;
-        pointer-events: none;
-        z-index: 30;
-      }
+      /* Tooltip para puntos individuales - SOLO ESCRITORIO */
+      @media (min-width: 769px) {
+        .annotation-point::before {
+          content: attr(data-tooltip);
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: var(--navy);
+          color: var(--white);
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 11px;
+          white-space: nowrap;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.2s ease;
+          pointer-events: none;
+          z-index: 30;
+        }
 
-      .annotation-point:hover::before {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(-8px);
-      }
+        .annotation-point:hover::before {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(-8px);
+        }
 
-      .annotation-point::after {
-        content: "";
-        position: absolute;
-        top: -4px;
-        left: 50%;
-        transform: translateX(-50%);
-        border: 4px solid transparent;
-        border-top-color: var(--navy);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.2s ease;
-        pointer-events: none;
-      }
+        .annotation-point::after {
+          content: "";
+          position: absolute;
+          top: -4px;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 4px solid transparent;
+          border-top-color: var(--navy);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.2s ease;
+          pointer-events: none;
+        }
 
-      .annotation-point:hover::after {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(-8px);
+        .annotation-point:hover::after {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(-8px);
+        }
       }
 
       .header-brand {
@@ -763,6 +765,114 @@
         }
         header {
           padding: 0 calc((100vw - 1250px) / 2 + 24px);
+        }
+      }
+
+      /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE ANNOTATIONS - MOBILE VERSION
+        ═══════════════════════════════════════════════════════════════ */
+      @media (max-width: 768px) {
+        /* Ocultar líneas y cuadros de texto en móvil */
+        .annotation-line,
+        .annotation-dropdown {
+          display: none;
+        }
+
+        /* Mantener los puntos pero solo clickeables - REDUCIDO EN MÓVIL */
+        .annotation-point {
+          position: absolute;
+          cursor: pointer;
+          z-index: 15;
+          width: 14px;
+          height: 14px;
+          background: var(--blue);
+          border: 1.5px solid var(--white);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: all 0.2s ease;
+          box-shadow: 0 0 0 2px rgba(44, 110, 213, 0.3);
+        }
+
+        .annotation-point:hover {
+          background: var(--orange);
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        /* Tooltip SOLO visible cuando el punto está activo (clickeado) */
+        .annotation-point::before {
+          content: attr(data-tooltip);
+          opacity: 0;
+          visibility: hidden;
+          transform: translateX(-50%) translateY(-4px);
+          background: var(--navy);
+          color: var(--white);
+          padding: 5px 8px;
+          border-radius: 4px;
+          font-size: 11px;
+          font-weight: 500;
+          white-space: nowrap;
+          z-index: 40;
+          bottom: 100%;
+          left: 50%;
+          position: absolute;
+          margin-bottom: 4px;
+          transition: all 0.2s ease;
+          pointer-events: none;
+        }
+
+        .annotation-point::after {
+          content: "";
+          opacity: 0;
+          visibility: hidden;
+          transform: translateX(-50%) translateY(-4px);
+          top: -4px;
+          left: 50%;
+          position: absolute;
+          border: 3px solid transparent;
+          border-top-color: var(--navy);
+          transition: all 0.2s ease;
+          pointer-events: none;
+        }
+
+        /* Tooltip activo al hacer click */
+        .annotation-point.active::before {
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: translateX(-50%) translateY(-8px) !important;
+        }
+
+        .annotation-point.active::after {
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: translateX(-50%) translateY(-8px) !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .annotation-point {
+          width: 12px;
+          height: 12px;
+          border-width: 1px;
+        }
+
+        .annotation-point:hover {
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        .annotation-point::before {
+          font-size: 10px;
+          padding: 4px 6px;
+          margin-bottom: 3px;
+        }
+
+        .annotation-point.active::before {
+          font-size: 10px;
+          padding: 4px 6px;
+          margin-bottom: 3px;
+        }
+
+        .annotation-point.active::after {
+          border-width: 3px;
         }
       }
     </style>
@@ -979,12 +1089,12 @@
               </li>
             </ul>
             <!-- Captura de pantalla con anotaciones interactivas -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista general de Inicio de Sesión (Pasa el cursor sobre la
                 imagen)</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_inicio_sesion.png"
                   alt="Pantalla principal del colaborador"
@@ -995,10 +1105,10 @@
                   <!-- Anotación 1: Campo de usuario -->
                   <div
                     class="annotation-point"
-                    style="top: 55%; left: 75%"
+                    style="top: 55%; left: 57%"
                     data-tooltip="Usuario"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 25%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 25%; left: 19%">
                     <h4>🔐 Campo de Usuario</h4>
                     <p>
                       Ingresa tu correo corporativo para acceder al sistema.
@@ -1008,28 +1118,28 @@
                     class="annotation-line"
                     style="
                       top: 55%;
-                      left: 75%;
-                      width: 80px;
-                      transform: rotate(225deg);
+                      left: 57%;
+                      width: 30px;
+                      transform: rotate(180deg);
                     "
                   ></div>
 
                   <!-- Anotación 2: Campo de contraseña -->
                   <div
                     class="annotation-point"
-                    style="top: 65%; left: 75%"
+                    style="top: 70%; left: 57%"
                     data-tooltip="Contraseña"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 50%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 63%; left: 19%">
                     <h4>🔒 Campo de Contraseña</h4>
                     <p>Introduce tu número de empleado como contraseña.</p>
                   </div>
                   <div
                     class="annotation-line"
                     style="
-                      top: 65%;
-                      left: 75%;
-                      width: 80px;
+                      top: 70%;
+                      left: 57%;
+                      width: 30px;
                       transform: rotate(180deg);
                     "
                   ></div>
@@ -1073,11 +1183,11 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista ampliada del menú de usuario</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_menu_usuario.png"
                   alt="Pantalla principal del colaborador"
@@ -1087,10 +1197,10 @@
                   <!-- Anotación 1: Menú de usuario -->
                   <div
                     class="annotation-point"
-                    style="top: 35%; left: 89%"
+                    style="top: 26%; left: 92.5%"
                     data-tooltip="Inicial de usuario"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 25%; left: 47%">
+                  <div class="annotation-dropdown" style="top: 20%; left: 54%">
                     <h4>🪪 Menu de Usuario</h4>
                     <p>
                       Inicial de tu nombre que despliega el menú de usuario.
@@ -1099,9 +1209,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 35%;
-                      left: 89%;
-                      width: 80px;
+                      top: 26%;
+                      left: 92.5%;
+                      width: 40px;
                       transform: rotate(180deg);
                     "
                   ></div>
@@ -1151,11 +1261,11 @@
               <li>Acceso rápido para crear un nuevo registro.</li>
             </ul>
             <!-- Captura de pantalla con anotaciones -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la Pantalla (Pasa el cursor)</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_principal_colaborador.png"
                   alt="Pantalla principal del colaborador"
@@ -1166,10 +1276,10 @@
                   <!-- Anotación 1: Botón registrar entrada -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 20%"
+                    style="top: 80%; left: 18%"
                     data-tooltip="Entrada"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 25%; left: 1%">
+                  <div class="annotation-dropdown" style="top: 27%; left: 1%">
                     <h4>📝 Registrar Entrada</h4>
                     <p>
                       Botón para registrar la hora de inicio de tu jornada
@@ -1179,9 +1289,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
-                      left: 20%;
-                      width: 80px;
+                      top: 80%;
+                      left: 18%;
+                      width: 40px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -1189,10 +1299,10 @@
                   <!-- Anotación 2: Botón agregar actividad -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 50%"
+                    style="top: 80%; left: 50%"
                     data-tooltip="Agregar"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 25%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 27%; left: 35%">
                     <h4>➕ Agregar Actividad</h4>
                     <p>
                       Acceso rápido para crear un nuevo registro de actividad.
@@ -1201,9 +1311,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
+                      top: 80%;
                       left: 50%;
-                      width: 80px;
+                      width: 40px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -1274,11 +1384,11 @@
             </ul>
 
             <!-- Captura de pantalla con anotaciones -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de formulario (Pasa el cursor)</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_registro_actividad.png"
                   alt="Ventana del formulario de registro de actividad"
@@ -1290,9 +1400,9 @@
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 20%"
-                    data-tooltip="Hora Inicio"
+                    data-tooltip="Hora de Inicio"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 2%">
+                  <div class="annotation-dropdown" style="top: 58%; left: 2%">
                     <h4>🕐 Hora de Inicio</h4>
                     <p>
                       Se establece automáticamente con la hora actual del
@@ -1304,7 +1414,7 @@
                     style="
                       top: 45%;
                       left: 20%;
-                      width: 70px;
+                      width: 40px;
                       transform: rotate(90deg);
                     "
                   ></div>
@@ -1315,7 +1425,7 @@
                     style="top: 45%; left: 50%"
                     data-tooltip="Hora Fin"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 58%; left: 35%">
                     <h4>🕒 Hora Fin</h4>
                     <p>
                       Ingresa manualmente el número de horas dedicadas a esta
@@ -1327,7 +1437,7 @@
                     style="
                       top: 45%;
                       left: 50%;
-                      width: 70px;
+                      width: 40px;
                       transform: rotate(90deg);
                     "
                   ></div>
@@ -1336,9 +1446,9 @@
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 80%"
-                    data-tooltip="Jefe"
+                    data-tooltip="Jefe responsable"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 68%">
+                  <div class="annotation-dropdown" style="top: 58%; left: 68%">
                     <h4>👤 Selección de Jefe Responsable</h4>
                     <p>
                       Selecciona de la lista desplegable al jefe encargado de tu
@@ -1350,7 +1460,7 @@
                     style="
                       top: 45%;
                       left: 80%;
-                      width: 70px;
+                      width: 40px;
                       transform: rotate(90deg);
                     "
                   ></div>
@@ -1419,11 +1529,11 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la Pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_otros_registros.png"
                   alt="Pantalla de otros registros"
@@ -1436,7 +1546,7 @@
                     style="top: 60%; left: 20%"
                     data-tooltip="Vacaciones"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 20%; left: 2%">
+                  <div class="annotation-dropdown" style="top: 20%; left: 1%">
                     <h4>Vacaciones</h4>
                     <p>
                       Botón para seleccionar días de registro de vacaciones.
@@ -1447,7 +1557,7 @@
                     style="
                       top: 60%;
                       left: 20%;
-                      width: 55px;
+                      width: 20px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -1458,7 +1568,7 @@
                     style="top: 60%; left: 40%"
                     data-tooltip="Permisos"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 20%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 20%; left: 34%">
                     <h4>Permisos</h4>
                     <p>
                       Botón para seleccionar días de permisos que se
@@ -1470,7 +1580,7 @@
                     style="
                       top: 60%;
                       left: 40%;
-                      width: 60px;
+                      width: 25px;
                       transform: rotate(-70deg);
                     "
                   ></div>
@@ -1481,7 +1591,7 @@
                     style="top: 60%; left: 70%"
                     data-tooltip="Incapacidad"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 20%; left: 68%">
+                  <div class="annotation-dropdown" style="top: 20%; left: 67%">
                     <h4>Incapacidad</h4>
                     <p>Botón para seleccionar de días de incapacidad.</p>
                   </div>
@@ -1490,7 +1600,7 @@
                     style="
                       top: 60%;
                       left: 70%;
-                      width: 70px;
+                      width: 30px;
                       transform: rotate(-50deg);
                     "
                   ></div>
@@ -1531,9 +1641,9 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/calendario_otros_registros.png"
                   alt="Calendario de otros registros"
@@ -1543,7 +1653,7 @@
                   <!-- Anotación 1: Calendario Incapacidad-->
                   <div
                     class="annotation-point"
-                    style="top: 30%; left: 20%"
+                    style="top: 35%; left: 22%"
                     data-tooltip="Calendario"
                   ></div>
                   <div class="annotation-dropdown" style="top: 5%; left: 5%">
@@ -1556,8 +1666,8 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 30%;
-                      left: 20%;
+                      top: 35%;
+                      left: 22%;
                       width: 30px;
                       transform: rotate(-90deg);
                     "
@@ -1566,10 +1676,10 @@
                   <!-- Anotación 2: Comentario opcional -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 40%"
+                    style="top: 78%; left: 20%"
                     data-tooltip="Comentario"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 42%; left: 25%">
+                  <div class="annotation-dropdown" style="top: 53%; left: 5%">
                     <h4>Comentarios</h4>
                     <p>
                       Campo de comenarios opcionales para registro de
@@ -1579,9 +1689,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
-                      left: 40%;
-                      width: 60px;
+                      top: 78%;
+                      left: 20%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -1589,19 +1699,19 @@
                   <!-- Anotación 3: Botón de guardar -->
                   <div
                     class="annotation-point"
-                    style="top: 82%; left: 88%"
-                    data-tooltip="Botón de guardar"
+                    style="top: 93%; left: 82%"
+                    data-tooltip="Guardar Registro"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 55%; left: 75%">
+                  <div class="annotation-dropdown" style="top: 68%; left: 65%">
                     <h4>Botón de guardar</h4>
                     <p>Botón para guardar registro de incapacidad.</p>
                   </div>
                   <div
                     class="annotation-line"
                     style="
-                      top: 82%;
-                      left: 88%;
-                      width: 60px;
+                      top: 93%;
+                      left: 82%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -1637,9 +1747,9 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/calendario_registros_extemporáneos.png"
                   alt="Calendario de registros extemporáneos"
@@ -1649,10 +1759,10 @@
                   <!-- Anotación 1: Calendario Interactivo-->
                   <div
                     class="annotation-point"
-                    style="top: 50%; left: 20%"
+                    style="top: 34%; left: 16%"
                     data-tooltip="Calendario"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 58%; left: 5%">
+                  <div class="annotation-dropdown" style="top: 45%; left: 1%">
                     <h4>Calendario Interactivo</h4>
                     <p>
                       Calndario interactivo que muestra las fechas disponibles
@@ -1662,8 +1772,8 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 50%;
-                      left: 20%;
+                      top: 34%;
+                      left: 16%;
                       width: 30px;
                       transform: rotate(90deg);
                     "
@@ -1672,10 +1782,10 @@
                   <!-- Anotación 2: Botón para guardar registro -->
                   <div
                     class="annotation-point"
-                    style="top: 72%; left: 80%"
+                    style="top: 80%; left: 82%"
                     data-tooltip="Boton de guardar"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 37%; left: 65%">
+                  <div class="annotation-dropdown" style="top: 42%; left: 65%">
                     <h4>Botón de guardar</h4>
                     <p>
                       Boton para guardar registro de actividades extemporaneas.
@@ -1684,9 +1794,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 72%;
-                      left: 80%;
-                      width: 60px;
+                      top: 80%;
+                      left: 82%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -1694,10 +1804,10 @@
                   <!-- Anotación 3: Botón de actividad -->
                   <div
                     class="annotation-point"
-                    style="top: 81%; left: 72%"
+                    style="top: 91%; left: 70%"
                     data-tooltip="Botón de actividad"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 68%; left: 38%">
+                  <div class="annotation-dropdown" style="top: 70%; left: 33%">
                     <h4>Botón de actividad</h4>
                     <p>
                       Botón para agregar actividades a registros extemporaneos.
@@ -1706,8 +1816,8 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 81%;
-                      left: 72%;
+                      top: 91%;
+                      left: 70%;
                       width: 30px;
                       transform: rotate(180deg);
                     "
@@ -1741,11 +1851,11 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista general de la pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_histoial_registros.png"
                   alt="Pantalla del historial de registros"
@@ -1756,72 +1866,69 @@
                   <!-- Anotación 1: Reportes pendientes-->
                   <div
                     class="annotation-point"
-                    style="top: 50%; left: 35%"
+                    style="top: 46%; left: 34%"
                     data-tooltip="Reportes pendientes"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 5%; left: 8%">
+                  <div class="annotation-dropdown" style="top: 55%; left: 4%">
                     <h4>Total de reportes pendientes</h4>
                     <p>
                       Ventana informativa de reportes que estan pendientes de
-                      revisar por el jefe a cargo. Muestra la lista de registros
-                      pendientes al darle clic.
+                      revisar por el jefe a cargo.
                     </p>
                   </div>
                   <div
                     class="annotation-line"
                     style="
-                      top: 50%;
-                      left: 35%;
-                      width: 30px;
-                      transform: rotate(-115deg);
+                      top: 46%;
+                      left: 34%;
+                      width: 20px;
+                      transform: rotate(90deg);
                     "
                   ></div>
 
                   <!-- Anotación 2: Reportes aprobados -->
                   <div
                     class="annotation-point"
-                    style="top: 50%; left: 60%"
+                    style="top: 46%; left: 58%"
                     data-tooltip="Reportes aprobados"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 5%; left: 39%">
+                  <div class="annotation-dropdown" style="top: 55%; left: 37%">
                     <h4>Total de reportes aprobados</h4>
                     <p>
                       Ventana informativa de reportes que han sido aprobados por
-                      el jefe a cargo. Muestra la lista de registros aprobados
-                      al darle clic.
+                      el jefe a cargo.
                     </p>
                   </div>
                   <div
                     class="annotation-line"
                     style="
-                      top: 50%;
-                      left: 60%;
-                      width: 30px;
-                      transform: rotate(-90deg);
+                      top: 46%;
+                      left: 58%;
+                      width: 20px;
+                      transform: rotate(90deg);
                     "
                   ></div>
 
                   <!-- Anotación 3: Reportes rechazados -->
                   <div
                     class="annotation-point"
-                    style="top: 50%; left: 85%"
+                    style="top: 46%; left: 83%"
                     data-tooltip="Reportes rechazados"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 5%; left: 70%">
+                  <div class="annotation-dropdown" style="top: 55%; left: 70%">
                     <h4>Total de reportes rechazados</h4>
                     <p>
                       Ventana informativa de reportes que han sido rechazados
-                      por el jefe a cargo. Muestra la lista de registros
-                      rechazados al darle clic.
+                      por el jefe a cargo.
                     </p>
                   </div>
                   <div
                     class="annotation-line"
                     style="
-                      top: 50%;
-                      left: 85%;
-                      width: 30px;
-                      transform: rotate(-70deg);
+                      top: 46%;
+                      left: 83%;
+                      width: 20px;
+                      transform: rotate(90deg);
                     "
                   ></div>
                 </div>
@@ -1891,11 +1998,11 @@
               <li>Pestaña para gestionar la asignación de actividades.</li>
             </ul>
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_principal_supervisor.png"
                   alt="Pantalla principal del supervisor"
@@ -1905,10 +2012,10 @@
                   <!-- Anotación 1: Botón registrar entrada -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 20%"
-                    data-tooltip="Entrada"
+                    style="top: 75%; left: 18%"
+                    data-tooltip="Registro de Entrada"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 30%; left: 5%">
+                  <div class="annotation-dropdown" style="top: 35%; left: 3%">
                     <h4>📝 Registrar Entrada</h4>
                     <p>
                       Botón para registrar la hora de inicio de tu jornada
@@ -1918,9 +2025,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
-                      left: 20%;
-                      width: 80px;
+                      top: 75%;
+                      left: 18%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -1928,10 +2035,10 @@
                   <!-- Anotación 2: Botón agregar actividad -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 50%"
-                    data-tooltip="Agregar"
+                    style="top: 75%; left: 50%"
+                    data-tooltip="Registro de Actividades"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 30%; left: 36%">
+                  <div class="annotation-dropdown" style="top: 35%; left: 36%">
                     <h4>➕ Agregar Actividad</h4>
                     <p>
                       Acceso rápido para crear un nuevo registro de actividad.
@@ -1940,7 +2047,7 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
+                      top: 75%;
                       left: 50%;
                       width: 80px;
                       transform: rotate(-90deg);
@@ -2013,11 +2120,11 @@
             </ul>
 
             <!-- Captura de pantalla con anotaciones -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de formulario (Pasa el cursor)</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_registro_actividad.png"
                   alt="Ventana del formulario de registro de actividad"
@@ -2029,9 +2136,9 @@
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 20%"
-                    data-tooltip="Hora Inicio"
+                    data-tooltip="Hora de Inicio"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 2%">
+                  <div class="annotation-dropdown" style="top: 58%; left: 2%">
                     <h4>🕐 Hora de Inicio</h4>
                     <p>
                       Se establece automáticamente con la hora actual del
@@ -2043,7 +2150,7 @@
                     style="
                       top: 45%;
                       left: 20%;
-                      width: 70px;
+                      width: 40px;
                       transform: rotate(90deg);
                     "
                   ></div>
@@ -2054,7 +2161,7 @@
                     style="top: 45%; left: 50%"
                     data-tooltip="Hora Fin"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 58%; left: 35%">
                     <h4>🕒 Hora Fin</h4>
                     <p>
                       Ingresa manualmente el número de horas dedicadas a esta
@@ -2066,7 +2173,7 @@
                     style="
                       top: 45%;
                       left: 50%;
-                      width: 70px;
+                      width: 40px;
                       transform: rotate(90deg);
                     "
                   ></div>
@@ -2075,9 +2182,9 @@
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 80%"
-                    data-tooltip="Jefe"
+                    data-tooltip="Jefe responsable"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 68%">
+                  <div class="annotation-dropdown" style="top: 58%; left: 68%">
                     <h4>👤 Selección de Jefe Responsable</h4>
                     <p>
                       Selecciona de la lista desplegable al jefe encargado de tu
@@ -2089,7 +2196,7 @@
                     style="
                       top: 45%;
                       left: 80%;
-                      width: 70px;
+                      width: 40px;
                       transform: rotate(90deg);
                     "
                   ></div>
@@ -2158,11 +2265,11 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la Pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_otros_registros.png"
                   alt="Pantalla de otros registros"
@@ -2175,7 +2282,7 @@
                     style="top: 60%; left: 20%"
                     data-tooltip="Vacaciones"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 20%; left: 2%">
+                  <div class="annotation-dropdown" style="top: 20%; left: 1%">
                     <h4>Vacaciones</h4>
                     <p>
                       Botón para seleccionar días de registro de vacaciones.
@@ -2186,7 +2293,7 @@
                     style="
                       top: 60%;
                       left: 20%;
-                      width: 55px;
+                      width: 20px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -2197,7 +2304,7 @@
                     style="top: 60%; left: 40%"
                     data-tooltip="Permisos"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 20%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 20%; left: 34%">
                     <h4>Permisos</h4>
                     <p>
                       Botón para seleccionar días de permisos que se
@@ -2209,7 +2316,7 @@
                     style="
                       top: 60%;
                       left: 40%;
-                      width: 60px;
+                      width: 25px;
                       transform: rotate(-70deg);
                     "
                   ></div>
@@ -2220,7 +2327,7 @@
                     style="top: 60%; left: 70%"
                     data-tooltip="Incapacidad"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 20%; left: 68%">
+                  <div class="annotation-dropdown" style="top: 20%; left: 67%">
                     <h4>Incapacidad</h4>
                     <p>Botón para seleccionar de días de incapacidad.</p>
                   </div>
@@ -2229,7 +2336,7 @@
                     style="
                       top: 60%;
                       left: 70%;
-                      width: 70px;
+                      width: 30px;
                       transform: rotate(-50deg);
                     "
                   ></div>
@@ -2270,9 +2377,9 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/calendario_otros_registros.png"
                   alt="Calendario de otros registros"
@@ -2282,7 +2389,7 @@
                   <!-- Anotación 1: Calendario Incapacidad-->
                   <div
                     class="annotation-point"
-                    style="top: 30%; left: 20%"
+                    style="top: 35%; left: 22%"
                     data-tooltip="Calendario"
                   ></div>
                   <div class="annotation-dropdown" style="top: 5%; left: 5%">
@@ -2295,8 +2402,8 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 30%;
-                      left: 20%;
+                      top: 35%;
+                      left: 22%;
                       width: 30px;
                       transform: rotate(-90deg);
                     "
@@ -2305,10 +2412,10 @@
                   <!-- Anotación 2: Comentario opcional -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 40%"
+                    style="top: 78%; left: 20%"
                     data-tooltip="Comentario"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 42%; left: 25%">
+                  <div class="annotation-dropdown" style="top: 53%; left: 5%">
                     <h4>Comentarios</h4>
                     <p>
                       Campo de comenarios opcionales para registro de
@@ -2318,9 +2425,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
-                      left: 40%;
-                      width: 60px;
+                      top: 78%;
+                      left: 20%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -2328,19 +2435,19 @@
                   <!-- Anotación 3: Botón de guardar -->
                   <div
                     class="annotation-point"
-                    style="top: 82%; left: 88%"
-                    data-tooltip="Botón de guardar"
+                    style="top: 93%; left: 82%"
+                    data-tooltip="Guardar Registro"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 55%; left: 75%">
+                  <div class="annotation-dropdown" style="top: 68%; left: 65%">
                     <h4>Botón de guardar</h4>
                     <p>Botón para guardar registro de incapacidad.</p>
                   </div>
                   <div
                     class="annotation-line"
                     style="
-                      top: 82%;
-                      left: 88%;
-                      width: 60px;
+                      top: 93%;
+                      left: 82%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -2376,9 +2483,9 @@
             </ul>
 
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/calendario_registros_extemporáneos.png"
                   alt="Calendario de registros extemporáneos"
@@ -2388,10 +2495,10 @@
                   <!-- Anotación 1: Calendario Interactivo-->
                   <div
                     class="annotation-point"
-                    style="top: 50%; left: 20%"
+                    style="top: 34%; left: 16%"
                     data-tooltip="Calendario"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 58%; left: 5%">
+                  <div class="annotation-dropdown" style="top: 45%; left: 1%">
                     <h4>Calendario Interactivo</h4>
                     <p>
                       Calndario interactivo que muestra las fechas disponibles
@@ -2401,8 +2508,8 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 50%;
-                      left: 20%;
+                      top: 34%;
+                      left: 16%;
                       width: 30px;
                       transform: rotate(90deg);
                     "
@@ -2411,10 +2518,10 @@
                   <!-- Anotación 2: Botón para guardar registro -->
                   <div
                     class="annotation-point"
-                    style="top: 72%; left: 80%"
+                    style="top: 80%; left: 82%"
                     data-tooltip="Boton de guardar"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 37%; left: 65%">
+                  <div class="annotation-dropdown" style="top: 42%; left: 65%">
                     <h4>Botón de guardar</h4>
                     <p>
                       Boton para guardar registro de actividades extemporaneas.
@@ -2423,9 +2530,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 72%;
-                      left: 80%;
-                      width: 60px;
+                      top: 80%;
+                      left: 82%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -2433,10 +2540,10 @@
                   <!-- Anotación 3: Botón de actividad -->
                   <div
                     class="annotation-point"
-                    style="top: 81%; left: 72%"
+                    style="top: 91%; left: 70%"
                     data-tooltip="Botón de actividad"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 68%; left: 38%">
+                  <div class="annotation-dropdown" style="top: 70%; left: 33%">
                     <h4>Botón de actividad</h4>
                     <p>
                       Botón para agregar actividades a registros extemporaneos.
@@ -2445,8 +2552,8 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 81%;
-                      left: 72%;
+                      top: 91%;
+                      left: 70%;
                       width: 30px;
                       transform: rotate(180deg);
                     "
@@ -2466,6 +2573,7 @@
               comentario opcional para cada registro.
             </div>
           </div>
+
           <!-- Validación -->
           <div class="card">
             <h2>Validación</h2>
@@ -2486,11 +2594,11 @@
               </li>
             </ul>
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista general de la tabla de pendientes</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/tabla_pendientes_supervisor.png"
                   alt="Tabla de reportes pendientes"
@@ -2500,10 +2608,10 @@
                   <!-- Anotación 1: Filtro de registros -->
                   <div
                     class="annotation-point"
-                    style="top: 45%; left: 20%"
+                    style="top: 18%; left: 20%"
                     data-tooltip="Filtro de registros"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 5%">
+                  <div class="annotation-dropdown" style="top: 35%; left: 3%">
                     <h4>Filtro de registros</h4>
                     <p>
                       Filtro de busqueda de registros realizados por el personal
@@ -2513,9 +2621,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 45%;
+                      top: 18%;
                       left: 20%;
-                      width: 30px;
+                      width: 25px;
                       transform: rotate(90deg);
                     "
                   ></div>
@@ -2523,10 +2631,10 @@
                   <!-- Anotación 2: Lista de registros -->
                   <div
                     class="annotation-point"
-                    style="top: 59%; left: 92%"
+                    style="top: 80%; left: 95%"
                     data-tooltip="Lista de registros"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 10%; left: 65%">
+                  <div class="annotation-dropdown" style="top: 1%; left: 65%">
                     <h4>Lista de registros</h4>
                     <p>
                       Lista desplegable de registros dividida por colaborador.
@@ -2535,9 +2643,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 59%;
-                      left: 92%;
-                      width: 30px;
+                      top: 80%;
+                      left: 95%;
+                      width: 20px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -2614,11 +2722,11 @@
               <li>Botón para cerrar sesión.</li>
             </ul>
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_principal_administrador.png"
                   alt="Pantalla principal del administrador"
@@ -2628,7 +2736,7 @@
                   <!-- Anotación 1: Menú lateral -->
                   <div
                     class="annotation-point"
-                    style="top: 25%; left: 20%"
+                    style="top: 20%; left: 20%"
                     data-tooltip="Menú lateral"
                   ></div>
                   <div class="annotation-dropdown" style="top: 10%; left: 25%">
@@ -2641,7 +2749,7 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 25%;
+                      top: 20%;
                       left: 20%;
                       width: 30px;
                       transform: rotate(0deg);
@@ -2651,10 +2759,10 @@
                   <!-- Anotación 2: Resumen del administrador -->
                   <div
                     class="annotation-point"
-                    style="top: 50%; left: 59%"
+                    style="top: 64%; left: 46%"
                     data-tooltip="Resumen del administrador"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 60%; left: 45%">
+                  <div class="annotation-dropdown" style="top: 55%; left: 51%">
                     <h4>Resumen del administrador</h4>
                     <p>
                       Resumen del administrador mostrando el total de usuarios,
@@ -2664,10 +2772,10 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 50%;
-                      left: 59%;
+                      top: 64%;
+                      left: 46%;
                       width: 30px;
-                      transform: rotate(90deg);
+                      transform: rotate(0deg);
                     "
                   ></div>
                 </div>
@@ -2710,11 +2818,11 @@
               </li>
             </ul>
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_gestion_usuarios.png"
                   alt="Pantalla principal de gestion de usuarios"
@@ -2725,10 +2833,10 @@
                   <!-- Anotación 1: Campo de nuevo usuario -->
                   <div
                     class="annotation-point"
-                    style="top: 25%; left: 80%"
+                    style="top: 14%; left: 80%"
                     data-tooltip="Nuevo usuario"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 10%; left: 45%">
+                  <div class="annotation-dropdown" style="top: 7%; left: 43%">
                     <h4>Campo de Nuevo Usuario</h4>
                     <p>
                       Ingresa los datos correspondientes al alta de un nuevo
@@ -2738,7 +2846,7 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 25%;
+                      top: 14%;
                       left: 80%;
                       width: 30px;
                       transform: rotate(180deg);
@@ -2748,10 +2856,10 @@
                   <!-- Anotación 2: Filtro de busqueda -->
                   <div
                     class="annotation-point"
-                    style="top: 56%; left: 50%"
+                    style="top: 59%; left: 30%"
                     data-tooltip="Filtro de Busqueda"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 40%; left: 55%">
+                  <div class="annotation-dropdown" style="top: 18%; left: 5%">
                     <h4>Filtro de busqueda</h4>
                     <p>
                       Introduce el nombre, puesto o numero de usuario para hacer
@@ -2761,20 +2869,20 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 56%;
-                      left: 50%;
+                      top: 59%;
+                      left: 30%;
                       width: 20px;
-                      transform: rotate(0deg);
+                      transform: rotate(-90deg);
                     "
                   ></div>
 
                   <!-- Anotación 3: Botones de acción -->
                   <div
                     class="annotation-point"
-                    style="top: 78%; left: 85%"
+                    style="top: 78%; left: 89%"
                     data-tooltip="Botones de acción"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 70%; left: 52%">
+                  <div class="annotation-dropdown" style="top: 65%; left: 52%">
                     <h4>Botones de acción</h4>
                     <p>
                       Botones de acción para editar, ascender o eliminar a un
@@ -2785,8 +2893,8 @@
                     class="annotation-line"
                     style="
                       top: 78%;
-                      left: 85%;
-                      width: 20px;
+                      left: 89%;
+                      width: 30px;
                       transform: rotate(180deg);
                     "
                   ></div>
@@ -2830,11 +2938,11 @@
               <li>Haz clic en el botón de “Eliminar” y confirma la acción.</li>
             </ul>
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_gestion_clientes.png"
                   alt="Pantalla principal de gestion de clientes"
@@ -2845,10 +2953,10 @@
                   <!-- Anotación 1: Campo de nuevo cliente -->
                   <div
                     class="annotation-point"
-                    style="top: 25%; left: 80%"
+                    style="top: 13%; left: 82%"
                     data-tooltip="Nuevo cliente"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 10%; left: 45%">
+                  <div class="annotation-dropdown" style="top: 6%; left: 43%">
                     <h4>Campo de Nuevo Cliente</h4>
                     <p>
                       Ingresa los datos correspondientes al alta de un nuevo
@@ -2858,8 +2966,8 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 25%;
-                      left: 80%;
+                      top: 13%;
+                      left: 82%;
                       width: 30px;
                       transform: rotate(180deg);
                     "
@@ -2868,10 +2976,10 @@
                   <!-- Anotación 2: Filtro de busqueda -->
                   <div
                     class="annotation-point"
-                    style="top: 56%; left: 50%"
+                    style="top: 66%; left: 27%"
                     data-tooltip="Filtro de Busqueda"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 35%; left: 55%">
+                  <div class="annotation-dropdown" style="top: 15%; left: 5%">
                     <h4>Filtro de busqueda</h4>
                     <p>
                       Introduce el ID, socio a cargo o numero del cliente para
@@ -2881,20 +2989,20 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 56%;
-                      left: 50%;
-                      width: 20px;
-                      transform: rotate(0deg);
+                      top: 66%;
+                      left: 27%;
+                      width: 30px;
+                      transform: rotate(-90deg);
                     "
                   ></div>
 
                   <!-- Anotación 3: Botones de acción -->
                   <div
                     class="annotation-point"
-                    style="top: 78%; left: 75%"
+                    style="top: 90%; left: 78%"
                     data-tooltip="Botones de acción"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 70%; left: 42%">
+                  <div class="annotation-dropdown" style="top: 62%; left: 40%">
                     <h4>Botones de acción</h4>
                     <p>
                       Botones de acción para editar o eliminar a un cliente
@@ -2904,9 +3012,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 78%;
-                      left: 75%;
-                      width: 20px;
+                      top: 90%;
+                      left: 78%;
+                      width: 30px;
                       transform: rotate(180deg);
                     "
                   ></div>
@@ -2953,11 +3061,11 @@
               <li>Confirma la acción.</li>
             </ul>
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_gestion_proyectos.png"
                   alt="Pantalla principal de gestión de proyectos"
@@ -2968,10 +3076,10 @@
                   <!-- Anotación 1: Campo de nuevo proyecto -->
                   <div
                     class="annotation-point"
-                    style="top: 22%; left: 80%"
+                    style="top: 12%; left: 82%"
                     data-tooltip="Nuevo proyecto"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 5%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 5%; left: 45%">
                     <h4>Campo de Nuevo Proyecto</h4>
                     <p>
                       Ingresa los datos correspondientes al alta de un nuevo
@@ -2981,9 +3089,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 22%;
-                      left: 80%;
-                      width: 120px;
+                      top: 12%;
+                      left: 82%;
+                      width: 30px;
                       transform: rotate(180deg);
                     "
                   ></div>
@@ -2991,10 +3099,10 @@
                   <!-- Anotación 2: Filtro de busqueda -->
                   <div
                     class="annotation-point"
-                    style="top: 56%; left: 50%"
+                    style="top: 64%; left: 27%"
                     data-tooltip="Filtro de Busqueda"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 30%; left: 64%">
+                  <div class="annotation-dropdown" style="top: 5%; left: 10%">
                     <h4>Filtro de busqueda</h4>
                     <p>
                       Introduce el socio a cargo, cliente, servicio o actividad
@@ -3005,20 +3113,20 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 56%;
-                      left: 50%;
-                      width: 100px;
-                      transform: rotate(0deg);
+                      top: 64%;
+                      left: 27%;
+                      width: 30px;
+                      transform: rotate(-90deg);
                     "
                   ></div>
 
                   <!-- Anotación 3: Botones de acción -->
                   <div
                     class="annotation-point"
-                    style="top: 75%; left: 80%"
+                    style="top: 90%; left: 82%"
                     data-tooltip="Botones de acción"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 65%; left: 35%">
+                  <div class="annotation-dropdown" style="top: 60%; left: 45%">
                     <h4>Botones de acción</h4>
                     <p>
                       Botones de acción para editar o eliminar a un proyecto
@@ -3028,9 +3136,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 75%;
-                      left: 80%;
-                      width: 120px;
+                      top: 90%;
+                      left: 82%;
+                      width: 30px;
                       transform: rotate(180deg);
                     "
                   ></div>
@@ -3059,11 +3167,11 @@
               </li>
             </ul>
             <!-- Captura de pantalla -->
-            <div class="screenshot-section image-annotation-container">
+            <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
               >
-              <div class="screenshot-container">
+              <div class="screenshot-container image-annotation-container">
                 <img
                   src="img/pantalla_exportacion_reportes.png"
                   alt="Pantalla principal de exportación de reportes"
@@ -3074,10 +3182,10 @@
                   <!-- Anotación 1: Filto de fecha -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 20%"
+                    style="top: 77%; left: 15%"
                     data-tooltip="Filtro de fecha"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 35%; left: 5%">
+                  <div class="annotation-dropdown" style="top: 34%; left: 1%">
                     <h4>Filtro de fecha</h4>
                     <p>
                       Filtro para busqueda de reportes por fecha o periodo de
@@ -3087,9 +3195,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
-                      left: 20%;
-                      width: 40px;
+                      top: 77%;
+                      left: 15%;
+                      width: 30px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -3097,10 +3205,10 @@
                   <!-- Anotación 2: Filtro de tipo -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 50%"
+                    style="top: 67%; left: 49%"
                     data-tooltip="Filtro de tipo"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 30%; left: 36%">
+                  <div class="annotation-dropdown" style="top: 16%; left: 34%">
                     <h4>Filtro de tipo de reporte</h4>
                     <p>
                       Filtro para busqueda de reportes. Se puede seleccionar
@@ -3110,9 +3218,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
-                      left: 50%;
-                      width: 40px;
+                      top: 67%;
+                      left: 49%;
+                      width: 35px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -3120,10 +3228,10 @@
                   <!-- Anotación 3: Botón de descarga -->
                   <div
                     class="annotation-point"
-                    style="top: 70%; left: 85%"
+                    style="top: 78%; left: 87%"
                     data-tooltip="Botón de descarga"
                   ></div>
-                  <div class="annotation-dropdown" style="top: 30%; left: 67%">
+                  <div class="annotation-dropdown" style="top: 29%; left: 67%">
                     <h4>Botón de descarga</h4>
                     <p>
                       Botón de descarga que genera un documento .xlsx de los
@@ -3133,9 +3241,9 @@
                   <div
                     class="annotation-line"
                     style="
-                      top: 70%;
-                      left: 85%;
-                      width: 40px;
+                      top: 78%;
+                      left: 87%;
+                      width: 35px;
                       transform: rotate(-90deg);
                     "
                   ></div>
@@ -3349,6 +3457,91 @@
         btn.classList.remove("open");
         document.body.style.overflow = "";
       }
+
+      /* ── ANNOTATION HANDLING ───────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", function () {
+        const annotationPoints = document.querySelectorAll(".annotation-point");
+
+        // Función para manejar clics en puntos de anotación
+        function handleAnnotationClick(e) {
+          e.stopPropagation(); // Evitar que se propague el evento
+
+          // Si estamos en móvil (≤ 768px)
+          if (window.innerWidth <= 768) {
+            const wasActive = this.classList.contains("active");
+
+            // Remover clase active de todos los puntos
+            annotationPoints.forEach((p) => p.classList.remove("active"));
+
+            // Si no estaba activo, activarlo
+            if (!wasActive) {
+              this.classList.add("active");
+              console.log(
+                "Tooltip activado para:",
+                this.getAttribute("data-tooltip"),
+              );
+            } else {
+              console.log("Tooltip desactivado");
+            }
+          }
+        }
+
+        // Función para cerrar todos los tooltips
+        function closeAllTooltips(e) {
+          // Solo en móvil
+          if (window.innerWidth <= 768) {
+            // Si el clic NO fue en un punto de anotación
+            if (!e.target.closest(".annotation-point")) {
+              annotationPoints.forEach((p) => p.classList.remove("active"));
+              console.log("Todos los tooltips cerrados");
+            }
+          }
+        }
+
+        // Configurar eventos iniciales
+        function setupEvents() {
+          // Configurar clics en puntos de anotación
+          annotationPoints.forEach((point) => {
+            point.addEventListener("click", handleAnnotationClick);
+          });
+
+          // Configurar clic en documento para cerrar tooltips
+          document.addEventListener("click", closeAllTooltips);
+
+          console.log(
+            "Eventos configurados para",
+            annotationPoints.length,
+            "puntos de anotación",
+          );
+          console.log(
+            "Modo actual:",
+            window.innerWidth <= 768 ? "MÓVIL" : "ESCRITORIO",
+          );
+        }
+
+        // Configurar eventos inicialmente
+        setupEvents();
+
+        // Reconfigurar cuando cambie el tamaño de la ventana
+        window.addEventListener("resize", function () {
+          // Si cambiamos de móvil a escritorio o viceversa
+          const wasMobile = window.innerWidth <= 768;
+          // No necesitamos reconfigurar eventos, solo limpiar tooltips si cambiamos a escritorio
+          if (!wasMobile && window.innerWidth > 768) {
+            annotationPoints.forEach((p) => p.classList.remove("active"));
+            console.log("Cambiado a modo escritorio - tooltips limpiados");
+          }
+        });
+
+        // Debug: Mostrar información de los puntos
+        console.log("=== DEBUG ANNOTATIONS ===");
+        annotationPoints.forEach((point, index) => {
+          console.log(`Punto ${index + 1}:`, {
+            dataTooltip: point.getAttribute("data-tooltip"),
+            hasClickListener: point.hasAttribute("data-listener"),
+          });
+        });
+      });
     </script>
   </body>
 </html>
