@@ -6,7 +6,7 @@
     <title>Manual de Usuario — Sistema de Reporte de Tiempos</title>
     <style>
       /* -----------------------------------------------------------------
-         CSS — Organización y convenciones (comentarios por desarrollador)
+         CSS — Organización y convenciones
 
          - Estructura: RESET & BASE | VARIABLES | LAYOUT | COMPONENTES |
            UTILIDADES | RESPONSIVE
@@ -155,9 +155,10 @@
         text-decoration: none;
       }
       .download {
-        padding: 9px 14px;
+        padding: 0px;
       }
-      nav button:hover {
+      nav button:hover,
+      .download:hover {
         background: var(--gray-bg);
         color: var(--navy);
       }
@@ -474,6 +475,7 @@
       .image-annotation-container {
         position: relative;
         cursor: help;
+        overflow: visible;
       }
 
       .annotation-point {
@@ -3282,8 +3284,27 @@
               </div>
               <div class="faq-a">
                 El sistema puede utilizarse desde computadoras, tabletas y
-                teléfonos inteligentes a través de cualquier navegador web
+                teléfonos inteligentes mediante cualquier navegador web
                 actualizado. No requiere instalación de ninguna aplicación.
+              </div>
+
+              <div class="faq-q">
+                ¿Se accede al nuevo sistema con el mismo enlace que el anterior?
+              </div>
+              <div class="faq-a">
+                No. Este sistema es completamente diferente, por lo que los
+                dominios son distintos. <br />
+                El enlace de este nuevo sistema es:
+                <a href="https://sclconsultores.com.mx/reportetiempos/login.php"
+                  >Sistema de Registro de Tiempos</a
+                >
+              </div>
+
+              <div class="faq-q">¿Qué pasa si registro mi entrada tarde?</div>
+              <div class="faq-a">
+                El sistema no tiene un control programado de retardos; por ello,
+                solo calculará tu hora de salida tardía en función del total de
+                horas de una jornada estándar.
               </div>
 
               <div class="faq-q">¿Olvidé mi contraseña, qué debo hacer?</div>
@@ -3298,9 +3319,18 @@
                 Sí. Por seguridad, el sistema cerrará la sesión automáticamente
                 después de un período de inactividad.
               </div>
+
+              <div class="faq-q">
+                ¿Cómo registro horas extra si trabajé más de 8 horas?
+              </div>
+              <div class="faq-a">
+                La plataforma no admite registros superiores a 8 horas; por
+                ello, las asignaciones deben organizarse para concluirse antes
+                del fin de la jornada.
+              </div>
             </ul>
           </div>
-          <!-- SECCIÓN: Preguntas frecuentes para empleados -->
+          <!-- BLOQUE: Preguntas frecuentes para empleados -->
           <div class="card">
             <h2>Para Colaboradores</h2>
             <ul>
@@ -3313,21 +3343,42 @@
               </div>
 
               <div class="faq-q">
+                ¿Qué pasa si hice un registro con anticipación y me cambian de
+                asignación cuando aún no he terminado la anterior?
+              </div>
+              <div class="faq-a">
+                Si ya realizaste un registro y cambian los planes, puedes
+                eliminarlo si aún no ha sido aprobado por tu jefe a cargo y
+                crear uno nuevo con los cambios efectuados, o bien editar los
+                registros directamente en la sección "Historial de registros".
+              </div>
+
+              <div class="faq-q">
                 ¿Cuántos días hacia atrás puedo registrar tiempos?
               </div>
               <div class="faq-a">
-                Se permiten registrar de manera extemporánea únicamente los días
-                del mes en curso.
+                Solo se permiten registros extemporáneos para los días del mes
+                en curso.
               </div>
 
               <div class="faq-q">
                 ¿Qué hago si el proyecto no aparece en la lista?
               </div>
               <div class="faq-a">
-                Contacta a tu administrador para que verifique la existencia del
-                proyecto y, en su defecto, cargue el nuevo proyecto
-                correspondiente. Solo ves los proyectos que han sido cargados al
-                sistema.
+                Solo verás los proyectos que se han cargado al sistema. Contacta
+                a tu administrador para verificar la existencia del proyecto y,
+                en su caso, cargar el nuevo proyecto correspondiente.
+              </div>
+
+              <div class="faq-q">
+                ¿Cómo puedo seleccionar al socio que está a cargo del proyecto
+                en mi registro de actividades?
+              </div>
+              <div class="faq-a">
+                El sistema relaciona a cada socio con sus proyectos desde que se
+                dan de alta, por lo que no tienes que preocuparte por
+                seleccionarlo. Esto, además de facilitar el registro, evita
+                errores al cargar proyectos al socio equivocado.
               </div>
             </ul>
           </div>
@@ -3336,11 +3387,22 @@
             <h2>Para Jefes a cargo</h2>
             <ul>
               <div class="faq-q">
+                ¿Tengo un periodo definido para poder validar o rechazar
+                reportes?
+              </div>
+              <div class="faq-a">
+                No. Puedes validarlos o rechazarlos con la frecuencia que mejor
+                se adapte a tus tiempos; sin embargo, recuerda que los reportes
+                se irán acumulando y que aquellos que no valides se perderán al
+                final del mes y afectarán a tu equipo.
+              </div>
+
+              <div class="faq-q">
                 ¿Puedo ver los reportes de empleados fuera de mi equipo?
               </div>
               <div class="faq-a">
-                No, en condiciones normales. Solo tienes acceso a los reportes
-                de los empleados asignados a tu cargo.
+                No. Solo tienes acceso a los reportes de los empleados que te
+                hayan seleccionado como jefe a cargo.
               </div>
             </ul>
           </div>
@@ -3352,8 +3414,8 @@
                 ¿Qué sucede con los registros de un empleado eliminado?
               </div>
               <div class="faq-a">
-                Los registros de un usuario eliminado pueden perderse
-                definitivamente.
+                Los registros de un usuario eliminado pueden perderse de forma
+                definitiva.
               </div>
             </ul>
           </div>
