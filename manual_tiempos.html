@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manual de Usuario — Sistema de Reporte de Tiempos</title>
     <style>
+      /* -----------------------------------------------------------------
+         CSS — Organización y convenciones (comentarios por desarrollador)
+
+         - Estructura: RESET & BASE | VARIABLES | LAYOUT | COMPONENTES |
+           UTILIDADES | RESPONSIVE
+         - Prefijos para comentarios en HTML/CSS del proyecto:
+           SECCIÓN:, BLOQUE:, CAPTURA:, ANOTACIONES:, ANOTACIÓN N:
+         - Variables en :root agrupadas por propósito (colores, tamaños,
+           sombras). Mantener especificidad baja y preferir variables.
+      ----------------------------------------------------------------- */
       /* ── RESET & BASE ─────────────────────────────────────────── */
       *,
       *::before,
@@ -14,6 +24,8 @@
         padding: 0;
       }
 
+      /* ── VARIABLES / DESIGN TOKENS ───────────────────────────── */
+      /* Colors (brand, accents, semantic statuses) */
       :root {
         --navy: #1f3a6b;
         --navy-mid: #28334f;
@@ -21,20 +33,25 @@
         --blue-light: #eef3fb;
         --blue-pale: #dbe5f1;
         --orange: #c55a11;
+        /* Semantic / status colors */
         --green-bg: #e2efda;
         --green-txt: #375623;
         --yellow-bg: #fff2cc;
         --yellow-txt: #7f4f00;
         --red-txt: #c00000;
+        /* Neutrals / surfaces / text */
         --gray-bg: #f5f6f8;
         --gray-border: #ddd;
         --text: #333;
         --text-light: #666;
         --white: #ffffff;
+        /* Layout tokens */
         --sidebar-w: 260px;
         --header-h: 99px;
         --radius: 10px;
+        /* Elevation / shadows */
         --shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
 
       html {
@@ -59,7 +76,7 @@
         height: var(--header-h);
         background: var(--white);
         border-bottom: 1px solid var(--gray-border);
-        box-shadow: 0 2px 4px #0001;
+        box-shadow: var(--shadow-sm);
         display: flex;
         align-items: center;
         padding: 0 24px;
@@ -104,7 +121,7 @@
         display: flex;
         flex-direction: column;
         gap: 2px;
-        box-shadow: 2px 2px 2px #0004;
+        box-shadow: var(--shadow-sm);
       }
 
       .nav-group-label {
@@ -114,7 +131,7 @@
         letter-spacing: 0.08em;
         color: var(--text-light);
         padding: 14px 12px 4px;
-        border-bottom: 2px solid #eef3fb;
+        border-bottom: 2px solid var(--blue-light);
       }
 
       nav button,
@@ -135,10 +152,10 @@
         align-items: center;
         gap: 9px;
         font-weight: bold;
+        text-decoration: none;
       }
       .download {
-        text-decoration: none;
-        padding: 0;
+        padding: 9px 14px;
       }
       nav button:hover {
         background: var(--gray-bg);
@@ -174,7 +191,6 @@
         border-radius: var(--radius);
         padding: 24px 28px;
         margin-bottom: 24px;
-        /* border-bottom: 4px solid var(--orange); */
       }
       .page-header h1 {
         font-size: 22px;
@@ -366,7 +382,6 @@
         border-radius: var(--radius);
         padding: 36px 32px;
         margin-bottom: 24px;
-        /* border-bottom: 4px solid var(--orange); */
         color: var(--white);
       }
       .cover-hero h1 {
@@ -409,11 +424,13 @@
         margin: 32px 0;
         text-align: center;
         border: 1px solid var(--gray-border);
-        transition: var(--transition);
+        transition:
+          border-color 0.2s,
+          background-color 0.2s;
       }
 
       .screenshot-section:hover {
-        border-color: var(--blue-primary);
+        border-color: var(--blue);
         background-color: #f0f5ff;
       }
 
@@ -422,7 +439,7 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        color: var(--gray-text);
+        color: var(--text-light);
         display: block;
         margin-bottom: 16px;
       }
@@ -431,7 +448,7 @@
         background: var(--white);
         border-radius: 8px;
         padding: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow);
         max-width: 800px;
         margin: 0 auto;
         overflow: auto;
@@ -446,7 +463,7 @@
 
       .screenshot-caption {
         font-size: 13px;
-        color: var(--gray-text);
+        color: var(--text-light);
         margin-top: 12px;
         font-style: italic;
       }
@@ -739,12 +756,10 @@
           font-size: 12px;
         }
 
-        /* Adjust steps list on small screens */
         .steps li {
           gap: 10px;
         }
 
-        /* Responsive image annotations containers */
         .screenshot-container {
           padding: 8px;
         }
@@ -772,13 +787,11 @@
            RESPONSIVE ANNOTATIONS - MOBILE VERSION
         ═══════════════════════════════════════════════════════════════ */
       @media (max-width: 768px) {
-        /* Ocultar líneas y cuadros de texto en móvil */
         .annotation-line,
         .annotation-dropdown {
           display: none;
         }
 
-        /* Mantener los puntos pero solo clickeables - REDUCIDO EN MÓVIL */
         .annotation-point {
           position: absolute;
           cursor: pointer;
@@ -798,7 +811,6 @@
           transform: translate(-50%, -50%) scale(1.2);
         }
 
-        /* Tooltip SOLO visible cuando el punto está activo (clickeado) */
         .annotation-point::before {
           content: attr(data-tooltip);
           opacity: 0;
@@ -834,13 +846,7 @@
           pointer-events: none;
         }
 
-        /* Tooltip activo al hacer click */
-        .annotation-point.active::before {
-          opacity: 1 !important;
-          visibility: visible !important;
-          transform: translateX(-50%) translateY(-8px) !important;
-        }
-
+        .annotation-point.active::before,
         .annotation-point.active::after {
           opacity: 1 !important;
           visibility: visible !important;
@@ -859,12 +865,7 @@
           transform: translate(-50%, -50%) scale(1.15);
         }
 
-        .annotation-point::before {
-          font-size: 10px;
-          padding: 4px 6px;
-          margin-bottom: 3px;
-        }
-
+        .annotation-point::before,
         .annotation-point.active::before {
           font-size: 10px;
           padding: 4px 6px;
@@ -878,7 +879,7 @@
     </style>
   </head>
   <body>
-    <!-- HEADER -->
+    <!-- SECCIÓN: Encabezado (header) -->
     <header>
       <div class="header-brand">
         <img
@@ -925,7 +926,7 @@
     ></div>
 
     <div class="layout">
-      <!-- SIDEBAR -->
+      <!-- SECCIÓN: Barra lateral (sidebar) -->
       <nav id="sidebar">
         <span class="nav-group-label">General</span>
         <button class="active" onclick="show('intro', this)">Inicio</button>
@@ -946,9 +947,9 @@
         </button>
       </nav>
 
-      <!-- MAIN -->
+      <!-- SECCIÓN: Contenido principal (main) -->
       <main>
-        <!-- Introducción -->
+        <!-- SECCIÓN: Introducción -->
         <div id="intro" class="section active">
           <div class="cover-hero">
             <h1>Manual de Usuario</h1>
@@ -956,7 +957,7 @@
               Sistema de Reporte de Tiempos — SCL Consultores
             </p>
           </div>
-          <!-- Texto introductorio -->
+          <!-- BLOQUE: Texto introductorio -->
           <div class="card">
             <h2>Introducción</h2>
             <p>
@@ -971,7 +972,7 @@
               utilizarlo de manera rápida y eficiente.
             </p>
           </div>
-          <!-- Qué es el sistema de reporte de tiempos -->
+          <!-- BLOQUE: ¿Qué es el Sistema de Reporte de Tiempos? -->
           <div class="card">
             <h2>¿Qué es el Sistema de Reporte de Tiempos?</h2>
             <p>
@@ -992,7 +993,7 @@
               <li>Administración de usuarios, proyectos y clientes</li>
             </ul>
           </div>
-          <!-- Roles de usuario -->
+          <!-- BLOQUE: Roles de usuario -->
           <div class="card">
             <h2>Roles de Usuario</h2>
             <p>
@@ -1049,7 +1050,7 @@
           </div>
         </div>
 
-        <!-- Acceso -->
+        <!-- SECCIÓN: Acceso al sistema -->
         <div id="acceso" class="section">
           <div class="page-header">
             <h1>Acceso al sistema</h1>
@@ -1058,7 +1059,7 @@
             </p>
           </div>
 
-          <!-- Ingresar al sistema -->
+          <!-- BLOQUE: Ingresar al sistema -->
           <div class="card">
             <h2>Ingresar al Sistema</h2>
             <p>
@@ -1088,7 +1089,7 @@
                 correctas, serás redirigido al panel principal.
               </li>
             </ul>
-            <!-- Captura de pantalla con anotaciones interactivas -->
+            <!-- CAPTURA: Captura de pantalla con anotaciones interactivas -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista general de Inicio de Sesión (Pasa el cursor sobre la
@@ -1100,9 +1101,9 @@
                   alt="Pantalla principal del colaborador"
                 />
 
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Campo de usuario -->
+                  <!-- ANOTACIÓN 1: Campo de usuario -->
                   <div
                     class="annotation-point"
                     style="top: 55%; left: 57%"
@@ -1124,7 +1125,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Campo de contraseña -->
+                  <!-- ANOTACIÓN 2: Campo de contraseña -->
                   <div
                     class="annotation-point"
                     style="top: 70%; left: 57%"
@@ -1150,7 +1151,7 @@
                 usuario, contraseña y botón de acceso.
               </p>
             </div>
-            <!-- Alerta -->
+            <!-- BLOQUE: Alerta -->
             <div class="note danger">
               <span class="note-label">⚠️ Importante: </span>
               Si ves un mensaje de error al ingresar, verifica que tu usuario y
@@ -1160,7 +1161,7 @@
             </div>
           </div>
 
-          <!-- Cerrar sesión -->
+          <!-- BLOQUE: Cerrar sesión -->
           <div class="card">
             <h2>Cerrar Sesión</h2>
             <p>
@@ -1182,7 +1183,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista ampliada del menú de usuario</span
@@ -1192,16 +1193,16 @@
                   src="img/pantalla_menu_usuario.png"
                   alt="Pantalla principal del colaborador"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Menú de usuario -->
+                  <!-- ANOTACIÓN 1: Menú de usuario -->
                   <div
                     class="annotation-point"
                     style="top: 26%; left: 92.5%"
                     data-tooltip="Inicial de usuario"
                   ></div>
                   <div class="annotation-dropdown" style="top: 20%; left: 54%">
-                    <h4>🪪 Menu de Usuario</h4>
+                    <h4>🪪 Menú de Usuario</h4>
                     <p>
                       Inicial de tu nombre que despliega el menú de usuario.
                     </p>
@@ -1223,7 +1224,7 @@
               </p>
             </div>
 
-            <!-- Recomendación -->
+            <!-- BLOQUE: Recomendación -->
             <div class="note info">
               <span class="note-label">💡 Recomendación: </span>
               Siempre cierra tu sesión cuando termines de trabajar en el
@@ -1233,7 +1234,7 @@
           </div>
         </div>
 
-        <!-- Guía del Empleado -->
+        <!-- SECCIÓN: Guía del Empleado -->
         <div id="empleado" class="section">
           <div class="page-header">
             <h1>Guía para el colaborador</h1>
@@ -1242,7 +1243,7 @@
               diarios.
             </p>
           </div>
-          <!-- Panel principal -->
+          <!-- BLOQUE: Panel principal -->
           <div class="card">
             <h2>Pantalla principal del colaborador</h2>
             <p>
@@ -1260,7 +1261,7 @@
               <li>Muestra si los reportes están pendientes o aprobados.</li>
               <li>Acceso rápido para crear un nuevo registro.</li>
             </ul>
-            <!-- Captura de pantalla con anotaciones -->
+            <!-- CAPTURA: Captura de pantalla con anotaciones -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la Pantalla (Pasa el cursor)</span
@@ -1271,9 +1272,9 @@
                   alt="Pantalla principal del colaborador"
                 />
 
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Botón registrar entrada -->
+                  <!-- ANOTACIÓN 1: Botón registrar entrada -->
                   <div
                     class="annotation-point"
                     style="top: 80%; left: 18%"
@@ -1296,7 +1297,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Botón agregar actividad -->
+                  <!-- ANOTACIÓN 2: Botón agregar actividad -->
                   <div
                     class="annotation-point"
                     style="top: 80%; left: 50%"
@@ -1326,11 +1327,11 @@
             </div>
           </div>
 
-          <!-- Registros -->
+          <!-- BLOQUE: Registros -->
           <div class="card">
             <h2>Registros</h2>
 
-            <!-- Registro de entrada y salida -->
+            <!-- BLOQUE: Registro de entrada y salida -->
             <h3>Entrada y Salida</h3>
             <ul>
               <li>
@@ -1347,7 +1348,7 @@
               </li>
             </ul>
 
-            <!-- Registro de actividades -->
+            <!-- BLOQUE: Registro de actividades -->
             <h3>Actividades</h3>
             <p>Para agregar un nuevo registro de tiempo:</p>
             <ul>
@@ -1383,7 +1384,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla con anotaciones -->
+            <!-- CAPTURA: Captura de pantalla con anotaciones -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de formulario (Pasa el cursor)</span
@@ -1394,9 +1395,9 @@
                   alt="Ventana del formulario de registro de actividad"
                 />
 
-                <!-- Sistema de anotaciones - 3 cuadros específicos -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen (3 cuadros) -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Hora de inicio -->
+                  <!-- ANOTACIÓN 1: Hora de inicio -->
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 20%"
@@ -1419,7 +1420,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Hora fin -->
+                  <!-- ANOTACIÓN 2: Hora fin -->
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 50%"
@@ -1442,7 +1443,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Jefe responsable -->
+                  <!-- ANOTACIÓN 3: Jefe responsable -->
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 80%"
@@ -1473,14 +1474,14 @@
               </p>
             </div>
 
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Es obligatorio completar todos los campos de la ventana de
               registro de actividad
             </div>
 
-            <!-- Eliminar un registro -->
+            <!-- BLOQUE: Eliminar un registro -->
             <h3>Eliminar un Registro</h3>
             <ul>
               <li>Localiza el registro en la tabla de tiempos.</li>
@@ -1495,7 +1496,7 @@
                 El registro se eliminará permanentemente de la base de datos.
               </li>
             </ul>
-            <!-- Advertencia -->
+            <!-- BLOQUE: Advertencia -->
             <div class="note danger">
               <span class="note-label">🚫 Importante: </span>
               Solo se pueden eliminar los registros que aún no hayan sido
@@ -1503,7 +1504,7 @@
             </div>
           </div>
 
-          <!-- Otros registros (Incidencias) -->
+          <!-- BLOQUE: Otros registros (Incidencias) -->
           <div class="card">
             <h2>Otros registros (Incidencias)</h2>
             <p>
@@ -1528,7 +1529,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la Pantalla</span
@@ -1538,9 +1539,9 @@
                   src="img/pantalla_otros_registros.png"
                   alt="Pantalla de otros registros"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Registro de vacaciones -->
+                  <!-- ANOTACIÓN 1: Registro de vacaciones -->
                   <div
                     class="annotation-point"
                     style="top: 60%; left: 20%"
@@ -1562,7 +1563,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Registro de Permisos -->
+                  <!-- ANOTACIÓN 2: Registro de Permisos -->
                   <div
                     class="annotation-point"
                     style="top: 60%; left: 40%"
@@ -1585,7 +1586,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Registro de Incapacidad -->
+                  <!-- ANOTACIÓN 3: Registro de Incapacidad -->
                   <div
                     class="annotation-point"
                     style="top: 60%; left: 70%"
@@ -1612,7 +1613,7 @@
               </p>
             </div>
 
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Los registros de vacaciones y permisos requieren autorización
@@ -1640,7 +1641,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
               <div class="screenshot-container image-annotation-container">
@@ -1648,9 +1649,9 @@
                   src="img/calendario_otros_registros.png"
                   alt="Calendario de otros registros"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Calendario Incapacidad-->
+                  <!-- ANOTACIÓN 1: Calendario Incapacidad-->
                   <div
                     class="annotation-point"
                     style="top: 35%; left: 22%"
@@ -1659,7 +1660,7 @@
                   <div class="annotation-dropdown" style="top: 5%; left: 5%">
                     <h4>Calendario Incapacidad</h4>
                     <p>
-                      Calndario interactivo que muestra las fechas disponibles
+                      Calendario interactivo que muestra las fechas disponibles
                       para seleccionar días de incapacidad.
                     </p>
                   </div>
@@ -1673,7 +1674,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Comentario opcional -->
+                  <!-- ANOTACIÓN 2: Comentario opcional -->
                   <div
                     class="annotation-point"
                     style="top: 78%; left: 20%"
@@ -1682,7 +1683,7 @@
                   <div class="annotation-dropdown" style="top: 53%; left: 5%">
                     <h4>Comentarios</h4>
                     <p>
-                      Campo de comenarios opcionales para registro de
+                      Campo de comentarios opcionales para registro de
                       incapacidad.
                     </p>
                   </div>
@@ -1696,7 +1697,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botón de guardar -->
+                  <!-- ANOTACIÓN 3: Botón de guardar -->
                   <div
                     class="annotation-point"
                     style="top: 93%; left: 82%"
@@ -1723,7 +1724,7 @@
               </p>
             </div>
 
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Los registros de incapacidad requieren autorización por parte de
@@ -1731,7 +1732,7 @@
             </div>
           </div>
 
-          <!-- Registros extemporáneos -->
+          <!-- BLOQUE: Registros extemporáneos -->
           <div class="card">
             <h2>Registros extemporáneos</h2>
             <ul>
@@ -1746,7 +1747,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
               <div class="screenshot-container image-annotation-container">
@@ -1754,9 +1755,9 @@
                   src="img/calendario_registros_extemporáneos.png"
                   alt="Calendario de registros extemporáneos"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Calendario Interactivo-->
+                  <!-- ANOTACIÓN 1: Calendario Interactivo-->
                   <div
                     class="annotation-point"
                     style="top: 34%; left: 16%"
@@ -1765,8 +1766,8 @@
                   <div class="annotation-dropdown" style="top: 45%; left: 1%">
                     <h4>Calendario Interactivo</h4>
                     <p>
-                      Calndario interactivo que muestra las fechas disponibles
-                      para seleccionar días de registos extemporaneos.
+                      Calendario interactivo que muestra las fechas disponibles
+                      para seleccionar días de registros extemporáneos.
                     </p>
                   </div>
                   <div
@@ -1779,16 +1780,16 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Botón para guardar registro -->
+                  <!-- ANOTACIÓN 2: Botón para guardar registro -->
                   <div
                     class="annotation-point"
                     style="top: 80%; left: 82%"
-                    data-tooltip="Boton de guardar"
+                    data-tooltip="Botón de guardar"
                   ></div>
                   <div class="annotation-dropdown" style="top: 42%; left: 65%">
                     <h4>Botón de guardar</h4>
                     <p>
-                      Boton para guardar registro de actividades extemporaneas.
+                      Botón para guardar registro de actividades extemporáneas.
                     </p>
                   </div>
                   <div
@@ -1801,7 +1802,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botón de actividad -->
+                  <!-- ANOTACIÓN 3: Botón de actividad -->
                   <div
                     class="annotation-point"
                     style="top: 91%; left: 70%"
@@ -1810,7 +1811,7 @@
                   <div class="annotation-dropdown" style="top: 70%; left: 33%">
                     <h4>Botón de actividad</h4>
                     <p>
-                      Botón para agregar actividades a registros extemporaneos.
+                      Botón para agregar actividades a registros extemporáneos.
                     </p>
                   </div>
                   <div
@@ -1825,11 +1826,11 @@
                 </div>
               </div>
               <p class="screenshot-caption">
-                Calendario interactivo para agregar registros extemporaneos
+                Calendario interactivo para agregar registros extemporáneos
                 disponibles del mes en curso.
               </p>
             </div>
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               El sistema proporciona un calendario interactivo que permite
@@ -1838,7 +1839,7 @@
             </div>
           </div>
 
-          <!-- Historial de registros -->
+          <!-- BLOQUE: Historial de registros -->
           <div class="card">
             <h2>Historial de Registros</h2>
             <ul>
@@ -1850,7 +1851,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista general de la pantalla</span
@@ -1861,9 +1862,9 @@
                   alt="Pantalla del historial de registros"
                 />
 
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Reportes pendientes-->
+                  <!-- ANOTACIÓN 1: Reportes pendientes-->
                   <div
                     class="annotation-point"
                     style="top: 46%; left: 34%"
@@ -1886,7 +1887,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Reportes aprobados -->
+                  <!-- ANOTACIÓN 2: Reportes aprobados -->
                   <div
                     class="annotation-point"
                     style="top: 46%; left: 58%"
@@ -1909,7 +1910,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Reportes rechazados -->
+                  <!-- ANOTACIÓN 3: Reportes rechazados -->
                   <div
                     class="annotation-point"
                     style="top: 46%; left: 83%"
@@ -1939,7 +1940,7 @@
               </p>
             </div>
 
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Aquí puede visualizar el estado de todo el historial de registros
@@ -1947,7 +1948,7 @@
             </div>
           </div>
 
-          <!-- Reglas del sistema -->
+          <!-- BLOQUE: Reglas del sistema -->
           <div class="card">
             <h2>Reglas del Sistema</h2>
             <ul>
@@ -1967,7 +1968,7 @@
           </div>
         </div>
 
-        <!-- Guía del Supervisor -->
+        <!-- SECCIÓN: Guía del Supervisor -->
         <div id="supervisor" class="section">
           <div class="page-header">
             <h1>Guía para el jefe a cargo</h1>
@@ -1976,7 +1977,7 @@
               equipo.
             </p>
           </div>
-          <!-- Panel principal del supervisor-->
+          <!-- BLOQUE: Panel principal del supervisor -->
           <div class="card">
             <h2>Pantalla principal del jefe a cargo</h2>
             <p>
@@ -1997,7 +1998,7 @@
               </li>
               <li>Pestaña para gestionar la asignación de actividades.</li>
             </ul>
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
@@ -2007,9 +2008,9 @@
                   src="img/pantalla_principal_supervisor.png"
                   alt="Pantalla principal del supervisor"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Botón registrar entrada -->
+                  <!-- ANOTACIÓN 1: Botón registrar entrada -->
                   <div
                     class="annotation-point"
                     style="top: 75%; left: 18%"
@@ -2032,7 +2033,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Botón agregar actividad -->
+                  <!-- ANOTACIÓN 2: Botón agregar actividad -->
                   <div
                     class="annotation-point"
                     style="top: 75%; left: 50%"
@@ -2062,11 +2063,11 @@
             </div>
           </div>
 
-          <!-- Registros -->
+          <!-- BLOQUE: Registros -->
           <div class="card">
             <h2>Registros</h2>
 
-            <!-- Registro de entrada y salida -->
+            <!-- BLOQUE: Registro de entrada y salida -->
             <h3>Entrada y Salida</h3>
             <ul>
               <li>
@@ -2083,7 +2084,7 @@
               </li>
             </ul>
 
-            <!-- Registro de actividades -->
+            <!-- BLOQUE: Registro de actividades -->
             <h3>Actividades</h3>
             <p>Para agregar un nuevo registro de tiempo:</p>
             <ul>
@@ -2119,7 +2120,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla con anotaciones -->
+            <!-- CAPTURA: Captura de pantalla con anotaciones -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de formulario (Pasa el cursor)</span
@@ -2130,9 +2131,9 @@
                   alt="Ventana del formulario de registro de actividad"
                 />
 
-                <!-- Sistema de anotaciones - 3 cuadros específicos -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen (3 cuadros) -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Hora de inicio -->
+                  <!-- ANOTACIÓN 1: Hora de inicio -->
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 20%"
@@ -2155,7 +2156,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Hora fin -->
+                  <!-- ANOTACIÓN 2: Hora fin -->
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 50%"
@@ -2178,7 +2179,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Jefe responsable -->
+                  <!-- ANOTACIÓN 3: Jefe responsable -->
                   <div
                     class="annotation-point"
                     style="top: 45%; left: 80%"
@@ -2209,14 +2210,14 @@
               </p>
             </div>
 
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Es obligatorio completar todos los campos de la ventana de
               registro de actividad
             </div>
 
-            <!-- Eliminar un registro -->
+            <!-- BLOQUE: Eliminar un registro -->
             <h3>Eliminar un Registro</h3>
             <ul>
               <li>Localiza el registro en la tabla de tiempos.</li>
@@ -2231,7 +2232,7 @@
                 El registro se eliminará permanentemente de la base de datos.
               </li>
             </ul>
-            <!-- Advertencia -->
+            <!-- BLOQUE: Advertencia -->
             <div class="note danger">
               <span class="note-label">🚫 Importante: </span>
               Solo se pueden eliminar los registros que aún no hayan sido
@@ -2239,7 +2240,7 @@
             </div>
           </div>
 
-          <!-- Otros registros (Incidencias) -->
+          <!-- BLOQUE: Otros registros (Incidencias) -->
           <div class="card">
             <h2>Otros registros (Incidencias)</h2>
             <p>
@@ -2264,7 +2265,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la Pantalla</span
@@ -2274,9 +2275,9 @@
                   src="img/pantalla_otros_registros.png"
                   alt="Pantalla de otros registros"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Registro de vacaciones -->
+                  <!-- ANOTACIÓN 1: Registro de vacaciones -->
                   <div
                     class="annotation-point"
                     style="top: 60%; left: 20%"
@@ -2298,7 +2299,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Registro de Permisos -->
+                  <!-- ANOTACIÓN 2: Registro de Permisos -->
                   <div
                     class="annotation-point"
                     style="top: 60%; left: 40%"
@@ -2321,7 +2322,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Registro de Incapacidad -->
+                  <!-- ANOTACIÓN 3: Registro de Incapacidad -->
                   <div
                     class="annotation-point"
                     style="top: 60%; left: 70%"
@@ -2348,7 +2349,7 @@
               </p>
             </div>
 
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Los registros de vacaciones y permisos requieren autorización
@@ -2376,7 +2377,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
               <div class="screenshot-container image-annotation-container">
@@ -2384,9 +2385,9 @@
                   src="img/calendario_otros_registros.png"
                   alt="Calendario de otros registros"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Calendario Incapacidad-->
+                  <!-- ANOTACIÓN 1: Calendario Incapacidad-->
                   <div
                     class="annotation-point"
                     style="top: 35%; left: 22%"
@@ -2395,7 +2396,7 @@
                   <div class="annotation-dropdown" style="top: 5%; left: 5%">
                     <h4>Calendario Incapacidad</h4>
                     <p>
-                      Calndario interactivo que muestra las fechas disponibles
+                      Calendario interactivo que muestra las fechas disponibles
                       para seleccionar días de incapacidad.
                     </p>
                   </div>
@@ -2409,7 +2410,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Comentario opcional -->
+                  <!-- ANOTACIÓN 2: Comentario opcional -->
                   <div
                     class="annotation-point"
                     style="top: 78%; left: 20%"
@@ -2418,7 +2419,7 @@
                   <div class="annotation-dropdown" style="top: 53%; left: 5%">
                     <h4>Comentarios</h4>
                     <p>
-                      Campo de comenarios opcionales para registro de
+                      Campo de comentarios opcionales para registro de
                       incapacidad.
                     </p>
                   </div>
@@ -2432,7 +2433,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botón de guardar -->
+                  <!-- ANOTACIÓN 3: Botón de guardar -->
                   <div
                     class="annotation-point"
                     style="top: 93%; left: 82%"
@@ -2459,7 +2460,7 @@
               </p>
             </div>
 
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Los registros de incapacidad requieren autorización por parte de
@@ -2467,7 +2468,7 @@
             </div>
           </div>
 
-          <!-- Registros extemporáneos -->
+          <!-- BLOQUE: Registros extemporáneos -->
           <div class="card">
             <h2>Registros extemporáneos</h2>
             <ul>
@@ -2482,7 +2483,7 @@
               </li>
             </ul>
 
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label">📸 Vista del Calendario</span>
               <div class="screenshot-container image-annotation-container">
@@ -2490,9 +2491,9 @@
                   src="img/calendario_registros_extemporáneos.png"
                   alt="Calendario de registros extemporáneos"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Calendario Interactivo-->
+                  <!-- ANOTACIÓN 1: Calendario Interactivo-->
                   <div
                     class="annotation-point"
                     style="top: 34%; left: 16%"
@@ -2501,8 +2502,8 @@
                   <div class="annotation-dropdown" style="top: 45%; left: 1%">
                     <h4>Calendario Interactivo</h4>
                     <p>
-                      Calndario interactivo que muestra las fechas disponibles
-                      para seleccionar días de registos extemporaneos.
+                      Calendario interactivo que muestra las fechas disponibles
+                      para seleccionar días de registros extemporáneos.
                     </p>
                   </div>
                   <div
@@ -2515,16 +2516,16 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Botón para guardar registro -->
+                  <!-- ANOTACIÓN 2: Botón para guardar registro -->
                   <div
                     class="annotation-point"
                     style="top: 80%; left: 82%"
-                    data-tooltip="Boton de guardar"
+                    data-tooltip="Botón de guardar"
                   ></div>
                   <div class="annotation-dropdown" style="top: 42%; left: 65%">
                     <h4>Botón de guardar</h4>
                     <p>
-                      Boton para guardar registro de actividades extemporaneas.
+                      Botón para guardar registro de actividades extemporáneas.
                     </p>
                   </div>
                   <div
@@ -2537,7 +2538,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botón de actividad -->
+                  <!-- ANOTACIÓN 3: Botón de actividad -->
                   <div
                     class="annotation-point"
                     style="top: 91%; left: 70%"
@@ -2546,7 +2547,7 @@
                   <div class="annotation-dropdown" style="top: 70%; left: 33%">
                     <h4>Botón de actividad</h4>
                     <p>
-                      Botón para agregar actividades a registros extemporaneos.
+                      Botón para agregar actividades a registros extemporáneos.
                     </p>
                   </div>
                   <div
@@ -2561,11 +2562,11 @@
                 </div>
               </div>
               <p class="screenshot-caption">
-                Calendario interactivo para agregar registros extemporaneos
+                Calendario interactivo para agregar registros extemporáneos
                 disponibles del mes en curso.
               </p>
             </div>
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               El sistema proporciona un calendario interactivo que permite
@@ -2574,7 +2575,7 @@
             </div>
           </div>
 
-          <!-- Validación -->
+          <!-- BLOQUE: Validación -->
           <div class="card">
             <h2>Validación</h2>
             <h3>Validar un Reporte</h3>
@@ -2593,7 +2594,7 @@
                 recibirá una notificación.
               </li>
             </ul>
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista general de la tabla de pendientes</span
@@ -2603,9 +2604,9 @@
                   src="img/tabla_pendientes_supervisor.png"
                   alt="Tabla de reportes pendientes"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Filtro de registros -->
+                  <!-- ANOTACIÓN 1: Filtro de registros -->
                   <div
                     class="annotation-point"
                     style="top: 18%; left: 20%"
@@ -2614,7 +2615,7 @@
                   <div class="annotation-dropdown" style="top: 35%; left: 3%">
                     <h4>Filtro de registros</h4>
                     <p>
-                      Filtro de busqueda de registros realizados por el personal
+                      Filtro de búsqueda de registros realizados por el personal
                       a tu cargo.
                     </p>
                   </div>
@@ -2628,7 +2629,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Lista de registros -->
+                  <!-- ANOTACIÓN 2: Lista de registros -->
                   <div
                     class="annotation-point"
                     style="top: 80%; left: 95%"
@@ -2657,7 +2658,7 @@
                 rechazados.
               </p>
             </div>
-            <!-- Recomendación -->
+            <!-- BLOQUE: Recomendación -->
             <div class="note success">
               <span class="note-label">✅ Recomendación: </span>
               Revisa con detenimiento cada registro antes de aprobar,
@@ -2681,7 +2682,7 @@
                 recibirá una notificación con tus comentarios.
               </li>
             </ul>
-            <!-- Recordatorio -->
+            <!-- BLOQUE: Recordatorio -->
             <div class="note info">
               <span class="note-label">💡 Recordatorio: </span>
               Puedes consultar el historial de registros del día en curso de
@@ -2692,7 +2693,7 @@
           </div>
         </div>
 
-        <!-- Guía del Administrador -->
+        <!-- SECCIÓN: Guía del Administrador -->
         <div id="admin" class="section">
           <div class="page-header">
             <h1>Guía para el administrador</h1>
@@ -2701,7 +2702,7 @@
               del sistema.
             </p>
           </div>
-          <!-- Panel principal -->
+          <!-- BLOQUE: Panel principal -->
           <div class="card">
             <h2>Pantalla principal del administrador</h2>
             <p>
@@ -2721,7 +2722,7 @@
               <li>Acceso rápido para exportación de reportes.</li>
               <li>Botón para cerrar sesión.</li>
             </ul>
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
@@ -2731,9 +2732,9 @@
                   src="img/pantalla_principal_administrador.png"
                   alt="Pantalla principal del administrador"
                 />
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Menú lateral -->
+                  <!-- ANOTACIÓN 1: Menú lateral -->
                   <div
                     class="annotation-point"
                     style="top: 20%; left: 20%"
@@ -2756,7 +2757,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Resumen del administrador -->
+                  <!-- ANOTACIÓN 2: Resumen del administrador -->
                   <div
                     class="annotation-point"
                     style="top: 64%; left: 46%"
@@ -2786,7 +2787,7 @@
               </p>
             </div>
           </div>
-          <!-- Gestión de Usuarios -->
+          <!-- SECCIÓN: Gestión de Usuarios -->
           <div class="card">
             <h2>Gestión de Usuarios</h2>
 
@@ -2817,7 +2818,7 @@
                 Haz clic en el ícono de eliminar (🗑️) y confirma la acción.
               </li>
             </ul>
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
@@ -2828,9 +2829,9 @@
                   alt="Pantalla principal de gestion de usuarios"
                 />
 
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Campo de nuevo usuario -->
+                  <!-- ANOTACIÓN 1: Campo de nuevo usuario -->
                   <div
                     class="annotation-point"
                     style="top: 14%; left: 80%"
@@ -2853,17 +2854,17 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Filtro de busqueda -->
+                  <!-- ANOTACIÓN 2: Filtro de búsqueda -->
                   <div
                     class="annotation-point"
                     style="top: 59%; left: 30%"
-                    data-tooltip="Filtro de Busqueda"
+                    data-tooltip="Filtro de Búsqueda"
                   ></div>
                   <div class="annotation-dropdown" style="top: 18%; left: 5%">
-                    <h4>Filtro de busqueda</h4>
+                    <h4>Filtro de búsqueda</h4>
                     <p>
-                      Introduce el nombre, puesto o numero de usuario para hacer
-                      una busqueda precisa de algun usuario.
+                      Introduce el nombre, puesto o número de usuario para hacer
+                      una búsqueda precisa de algún usuario.
                     </p>
                   </div>
                   <div
@@ -2876,7 +2877,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botones de acción -->
+                  <!-- ANOTACIÓN 3: Botones de acción -->
                   <div
                     class="annotation-point"
                     style="top: 78%; left: 89%"
@@ -2907,7 +2908,7 @@
               </p>
             </div>
           </div>
-          <!-- Gestión de Clientes -->
+          <!-- SECCIÓN: Gestión de Clientes -->
           <div class="card">
             <h2>Gestión de Clientes</h2>
 
@@ -2937,7 +2938,7 @@
               <li>En el menú, selecciona "Clientes".</li>
               <li>Haz clic en el botón de “Eliminar” y confirma la acción.</li>
             </ul>
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
@@ -2948,9 +2949,9 @@
                   alt="Pantalla principal de gestion de clientes"
                 />
 
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Campo de nuevo cliente -->
+                  <!-- ANOTACIÓN 1: Campo de nuevo cliente -->
                   <div
                     class="annotation-point"
                     style="top: 13%; left: 82%"
@@ -2973,17 +2974,17 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Filtro de busqueda -->
+                  <!-- ANOTACIÓN 2: Filtro de búsqueda -->
                   <div
                     class="annotation-point"
                     style="top: 66%; left: 27%"
-                    data-tooltip="Filtro de Busqueda"
+                    data-tooltip="Filtro de Búsqueda"
                   ></div>
                   <div class="annotation-dropdown" style="top: 15%; left: 5%">
-                    <h4>Filtro de busqueda</h4>
+                    <h4>Filtro de búsqueda</h4>
                     <p>
-                      Introduce el ID, socio a cargo o numero del cliente para
-                      hacer una busqueda precisa de algun cliente registrado.
+                      Introduce el ID, socio a cargo o número del cliente para
+                      hacer una búsqueda precisa de algún cliente registrado.
                     </p>
                   </div>
                   <div
@@ -2996,7 +2997,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botones de acción -->
+                  <!-- ANOTACIÓN 3: Botones de acción -->
                   <div
                     class="annotation-point"
                     style="top: 90%; left: 78%"
@@ -3027,7 +3028,7 @@
               </p>
             </div>
           </div>
-          <!-- Gestión de Proyectos -->
+          <!-- SECCIÓN: Gestión de Proyectos -->
           <div class="card">
             <h2>Gestión de Proyectos</h2>
 
@@ -3060,7 +3061,7 @@
               </li>
               <li>Confirma la acción.</li>
             </ul>
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
@@ -3071,9 +3072,9 @@
                   alt="Pantalla principal de gestión de proyectos"
                 />
 
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Campo de nuevo proyecto -->
+                  <!-- ANOTACIÓN 1: Campo de nuevo proyecto -->
                   <div
                     class="annotation-point"
                     style="top: 12%; left: 82%"
@@ -3096,17 +3097,17 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Filtro de busqueda -->
+                  <!-- ANOTACIÓN 2: Filtro de búsqueda -->
                   <div
                     class="annotation-point"
                     style="top: 64%; left: 27%"
-                    data-tooltip="Filtro de Busqueda"
+                    data-tooltip="Filtro de Búsqueda"
                   ></div>
                   <div class="annotation-dropdown" style="top: 5%; left: 10%">
-                    <h4>Filtro de busqueda</h4>
+                    <h4>Filtro de búsqueda</h4>
                     <p>
                       Introduce el socio a cargo, cliente, servicio o actividad
-                      para hacer una busqueda precisa de algun proyecto
+                      para hacer una búsqueda precisa de algún proyecto
                       registrado.
                     </p>
                   </div>
@@ -3120,7 +3121,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botones de acción -->
+                  <!-- ANOTACIÓN 3: Botones de acción -->
                   <div
                     class="annotation-point"
                     style="top: 90%; left: 82%"
@@ -3151,7 +3152,7 @@
               </p>
             </div>
           </div>
-          <!-- Exportación de Reportes -->
+          <!-- SECCIÓN: Exportación de Reportes -->
           <div class="card">
             <h2>Exportación de Reportes</h2>
             <ul>
@@ -3166,7 +3167,7 @@
                 automáticamente a tu computadora.
               </li>
             </ul>
-            <!-- Captura de pantalla -->
+            <!-- CAPTURA: Captura de pantalla -->
             <div class="screenshot-section">
               <span class="screenshot-label"
                 >📸 Vista General de la pantalla</span
@@ -3177,9 +3178,9 @@
                   alt="Pantalla principal de exportación de reportes"
                 />
 
-                <!-- Sistema de anotaciones -->
+                <!-- ANOTACIONES: Grupo de anotaciones de imagen -->
                 <div class="annotation-group">
-                  <!-- Anotación 1: Filto de fecha -->
+                  <!-- ANOTACIÓN 1: Filto de fecha -->
                   <div
                     class="annotation-point"
                     style="top: 77%; left: 15%"
@@ -3188,7 +3189,7 @@
                   <div class="annotation-dropdown" style="top: 34%; left: 1%">
                     <h4>Filtro de fecha</h4>
                     <p>
-                      Filtro para busqueda de reportes por fecha o periodo de
+                      Filtro para búsqueda de reportes por fecha o período de
                       días.
                     </p>
                   </div>
@@ -3202,7 +3203,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 2: Filtro de tipo -->
+                  <!-- ANOTACIÓN 2: Filtro de tipo -->
                   <div
                     class="annotation-point"
                     style="top: 67%; left: 49%"
@@ -3211,7 +3212,7 @@
                   <div class="annotation-dropdown" style="top: 16%; left: 34%">
                     <h4>Filtro de tipo de reporte</h4>
                     <p>
-                      Filtro para busqueda de reportes. Se puede seleccionar
+                      Filtro para búsqueda de reportes. Se puede seleccionar
                       reporte de asistencia, actividades o ambos.
                     </p>
                   </div>
@@ -3225,7 +3226,7 @@
                     "
                   ></div>
 
-                  <!-- Anotación 3: Botón de descarga -->
+                  <!-- ANOTACIÓN 3: Botón de descarga -->
                   <div
                     class="annotation-point"
                     style="top: 78%; left: 87%"
@@ -3253,7 +3254,7 @@
                 Pantalla principal de exportación de reportes.
               </p>
             </div>
-            <!-- Recomendación -->
+            <!-- BLOQUE: Recomendación -->
             <div class="note success">
               <span class="note-label">✅ Recomendación: </span>
               Los reportes exportados en Excel pueden procesarse con tablas
@@ -3263,7 +3264,7 @@
           </div>
         </div>
 
-        <!-- Preguntas Frecuentes -->
+        <!-- SECCIÓN: Preguntas Frecuentes -->
         <div id="faq" class="section">
           <div class="page-header">
             <h1>Preguntas frecuentes</h1>
@@ -3272,7 +3273,7 @@
               usuario.
             </p>
           </div>
-          <!-- Preguntas generales -->
+          <!-- BLOQUE: Preguntas generales -->
           <div class="card">
             <h2>Generales</h2>
             <ul>
@@ -3299,7 +3300,7 @@
               </div>
             </ul>
           </div>
-          <!-- Preguntas para empleados -->
+          <!-- SECCIÓN: Preguntas frecuentes para empleados -->
           <div class="card">
             <h2>Para Colaboradores</h2>
             <ul>
@@ -3330,7 +3331,7 @@
               </div>
             </ul>
           </div>
-          <!-- Preguntas para supervisores -->
+          <!-- BLOQUE: Preguntas para supervisores -->
           <div class="card">
             <h2>Para Jefes a cargo</h2>
             <ul>
@@ -3343,7 +3344,7 @@
               </div>
             </ul>
           </div>
-          <!-- Preguntas para administradores -->
+          <!-- BLOQUE: Preguntas para administradores -->
           <div class="card">
             <h2>Para Administradores</h2>
             <ul>
@@ -3358,7 +3359,7 @@
           </div>
         </div>
 
-        <!-- Soporte Técnico -->
+        <!-- SECCIÓN: Soporte Técnico -->
         <div id="soporte" class="section">
           <div class="page-header">
             <h1>Soporte y contacto</h1>
@@ -3367,7 +3368,7 @@
             </p>
           </div>
 
-          <!-- Reportar un problema -->
+          <!-- BLOQUE: Reportar un problema -->
           <div class="card">
             <h2>Reportar un Problema</h2>
             <p>
@@ -3394,7 +3395,7 @@
               solicitará tu contraseña de acceso al sistema.
             </div>
           </div>
-          <!-- Problemas comunes y soluciones -->
+          <!-- BLOQUE: Problemas comunes y soluciones -->
           <div class="card">
             <h2>Problemas Comunes y Soluciones</h2>
             <h3>
@@ -3412,134 +3413,118 @@
     </div>
 
     <script>
-      // ── Navegación: usado por los botones en la barra lateral
+      /* -----------------------------------------------------------------
+         JS — Comportamiento de la interfaz (documentado)
+
+         Organización:
+         1. Utilidades de navegación (show)
+         2. Control del menú lateral (setMenuOpen, toggleMenu, closeMenu)
+         3. Sistema de anotaciones (inicialización, manejadores)
+
+         Notas de buenas prácticas:
+         - Mantener funciones pequeñas y descriptivas.
+         - Evitar efectos colaterales inesperados; toda mutación DOM está
+           explícita y documentada.
+         - El comportamiento responsive se regula con checks de ancho
+           (`window.innerWidth`) para separar desktop/mobile.
+      ----------------------------------------------------------------- */
+
+      // Mostrar una sección del manual y actualizar el estado del nav.
+      // - id: id de la sección a mostrar
+      // - btn: elemento <button> del menú para actualizar su estado activo
       function show(id, btn) {
+        // Activar la sección correspondiente, ocultar las demás
         document
           .querySelectorAll(".section")
-          .forEach((s) => s.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
+          .forEach((s) => s.classList.toggle("active", s.id === id));
+
+        // Marcar el botón activo en el sidebar
         document
           .querySelectorAll("nav button")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
+          .forEach((b) => b.classList.toggle("active", b === btn));
+
+        // Llevar al inicio de la página (mejor experiencia UX)
         window.scrollTo({ top: 0, behavior: "smooth" });
 
-        // Cerrar menú en dispositivos móviles tras seleccionar sección
-        if (window.innerWidth <= 768) {
-          closeMenu();
-        }
+        // En dispositivos móviles cerramos el menú al navegar
+        if (window.innerWidth <= 768) closeMenu();
       }
 
+      // Cache de elementos del menú para evitar consultas repetidas al DOM
+      const menuElements = {
+        sidebar: document.getElementById("sidebar"),
+        overlay: document.getElementById("sidebar-overlay"),
+        btn: document.getElementById("hamburger-menu"),
+      };
+
+      // Abre o cierra el menú lateral y gestiona el estado del overlay
+      // - isOpen: booleano que indica si el menú debe mostrarse
+      function setMenuOpen(isOpen) {
+        menuElements.sidebar.classList.toggle("open", isOpen);
+        menuElements.overlay.classList.toggle("active", isOpen);
+        menuElements.btn.classList.toggle("open", isOpen);
+
+        // Evita scroll del body cuando el menú está abierto (UX móvil)
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      }
+
+      // Alterna el estado del menú lateral (open/closed)
       function toggleMenu() {
-        const sidebar = document.getElementById("sidebar");
-        const overlay = document.getElementById("sidebar-overlay");
-        const btn = document.getElementById("hamburger-menu");
-
-        sidebar.classList.toggle("open");
-        overlay.classList.toggle("active");
-        btn.classList.toggle("open");
-
-        // Evitar scroll en el cuerpo cuando el menú está abierto
-        if (sidebar.classList.contains("open")) {
-          document.body.style.overflow = "hidden";
-        } else {
-          document.body.style.overflow = "";
-        }
+        setMenuOpen(!menuElements.sidebar.classList.contains("open"));
       }
 
+      // Cierra el menú lateral (helper explícito)
       function closeMenu() {
-        const sidebar = document.getElementById("sidebar");
-        const overlay = document.getElementById("sidebar-overlay");
-        const btn = document.getElementById("hamburger-menu");
-
-        sidebar.classList.remove("open");
-        overlay.classList.remove("active");
-        btn.classList.remove("open");
-        document.body.style.overflow = "";
+        setMenuOpen(false);
       }
 
-      /* ── ANNOTATION HANDLING ───────────────────────────────────── */
+      /* -----------------------------------------------------------------
+         SISTEMA DE ANOTACIONES (Puntos y tooltips sobre capturas)
+
+         Comportamiento:
+         - En desktop los tooltips se manejan vía CSS (:hover + pseudo)
+         - En mobile se gestiona con clases `active` para mostrar/ocultar
+           dropdowns y tooltips al tocar los puntos.
+      ----------------------------------------------------------------- */
       document.addEventListener("DOMContentLoaded", function () {
         const annotationPoints = document.querySelectorAll(".annotation-point");
 
-        // Función para manejar clics en puntos de anotación
+        // Maneja el click/tap sobre un punto de anotación.
+        // En mobile: abre el tooltip correspondiente y cierra los demás.
         function handleAnnotationClick(e) {
-          e.stopPropagation(); // Evitar que se propague el evento
-
-          // Si estamos en móvil (≤ 768px)
+          e.stopPropagation();
           if (window.innerWidth <= 768) {
-            const wasActive = this.classList.contains("active");
-
-            // Remover clase active de todos los puntos
+            const isActive = this.classList.contains("active");
+            // cerrar todos
             annotationPoints.forEach((p) => p.classList.remove("active"));
-
-            // Si no estaba activo, activarlo
-            if (!wasActive) {
-              this.classList.add("active");
-              console.log(
-                "Tooltip activado para:",
-                this.getAttribute("data-tooltip"),
-              );
-            } else {
-              console.log("Tooltip desactivado");
-            }
+            // toggle explícito del punto clicado
+            if (!isActive) this.classList.add("active");
           }
         }
 
-        // Función para cerrar todos los tooltips
+        // Cierra tooltips activos cuando el usuario hace click fuera
+        // (solo en mobile — en desktop el hover se encarga de la UX)
         function closeAllTooltips(e) {
-          // Solo en móvil
-          if (window.innerWidth <= 768) {
-            // Si el clic NO fue en un punto de anotación
-            if (!e.target.closest(".annotation-point")) {
-              annotationPoints.forEach((p) => p.classList.remove("active"));
-              console.log("Todos los tooltips cerrados");
-            }
-          }
-        }
-
-        // Configurar eventos iniciales
-        function setupEvents() {
-          // Configurar clics en puntos de anotación
-          annotationPoints.forEach((point) => {
-            point.addEventListener("click", handleAnnotationClick);
-          });
-
-          // Configurar clic en documento para cerrar tooltips
-          document.addEventListener("click", closeAllTooltips);
-
-          console.log(
-            "Eventos configurados para",
-            annotationPoints.length,
-            "puntos de anotación",
-          );
-          console.log(
-            "Modo actual:",
-            window.innerWidth <= 768 ? "MÓVIL" : "ESCRITORIO",
-          );
-        }
-
-        // Configurar eventos inicialmente
-        setupEvents();
-
-        // Reconfigurar cuando cambie el tamaño de la ventana
-        window.addEventListener("resize", function () {
-          // Si cambiamos de móvil a escritorio o viceversa
-          const wasMobile = window.innerWidth <= 768;
-          // No necesitamos reconfigurar eventos, solo limpiar tooltips si cambiamos a escritorio
-          if (!wasMobile && window.innerWidth > 768) {
+          if (
+            window.innerWidth <= 768 &&
+            !e.target.closest(".annotation-point")
+          ) {
             annotationPoints.forEach((p) => p.classList.remove("active"));
-            console.log("Cambiado a modo escritorio - tooltips limpiados");
           }
-        });
+        }
 
-        // Debug: Mostrar información de los puntos
-        console.log("=== DEBUG ANNOTATIONS ===");
-        annotationPoints.forEach((point, index) => {
-          console.log(`Punto ${index + 1}:`, {
-            dataTooltip: point.getAttribute("data-tooltip"),
-            hasClickListener: point.hasAttribute("data-listener"),
-          });
+        // Delegación mínima: asociar handlers de interacción a cada punto
+        annotationPoints.forEach((point) =>
+          point.addEventListener("click", handleAnnotationClick),
+        );
+        document.addEventListener("click", closeAllTooltips);
+
+        // Al cambiar el tamaño de ventana, asegurar estado consistente
+        window.addEventListener("resize", () => {
+          if (window.innerWidth > 768) {
+            // limpiar estados mobile para volver al comportamiento hover
+            annotationPoints.forEach((p) => p.classList.remove("active"));
+          }
         });
       });
     </script>
